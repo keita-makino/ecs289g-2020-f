@@ -18,7 +18,7 @@ export const ActionPanel: React.FC<PropsBase> = (_props: PropsBase) => {
     <TwoColumnCard title={'Actions'}>
       <Grid
         columns={repeat('auto-fit', 'size-2000')}
-        autoRows={'size-2000'}
+        autoRows={'size-1200'}
         columnGap={'size-400'}
       >
         <ActionTrigger type={'CrossTab'} />

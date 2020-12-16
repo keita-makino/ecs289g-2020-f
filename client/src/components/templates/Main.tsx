@@ -5,39 +5,54 @@ import { useWindowSize } from 'react-use';
 import { QuestionDetailsPanel } from '../organisms/QuestionDetailsPanel';
 import { QuestionTitle } from '../molecules/QuestionTitle';
 import { useReactiveVar } from '@apollo/client';
-import { selectedActionVar } from '../../App';
+import {
+  isLoadingVar,
+  selectedActionVar,
+  selectedQuestionVar,
+} from '../../localState';
 import { CrossTabPanel } from '../organisms/CrossTabPanel';
+import { LoadedScreen } from '../molecules/LoadedScreen';
 
 type Props = {};
 
 export const Main: React.FC<Props> = () => {
   const window = useWindowSize();
   const selectedAction = useReactiveVar(selectedActionVar);
+  const selectedQuestion = useReactiveVar(selectedQuestionVar);
+  const isLoadingMain = useReactiveVar(isLoadingVar)['main'];
+  const isLoadingPanel = useReactiveVar(isLoadingVar)['panel'];
 
   return (
     <>
-      <Grid
-        areas={['side  main']}
-        columns={['size-5000', 'auto']}
-        height={window.height}
-        width={window.width}
-      >
-        <View gridArea={'side'}>
-          <Sidebar />
-        </View>
-        <View
-          gridArea={'main'}
-          paddingStart={'size-400'}
-          paddingEnd={'size-400'}
+      <LoadedScreen loading={isLoadingMain}>
+        <Grid
+          areas={['side  main']}
+          columns={['size-5000', 'auto']}
+          height={window.height}
+          width={window.width}
+          columnGap={'size-400'}
         >
-          <QuestionTitle />
-          {selectedAction === null ? (
-            <QuestionDetailsPanel />
-          ) : (
-            <CrossTabPanel />
-          )}
-        </View>
-      </Grid>
+          <Grid gridArea={'side'}>
+            <Sidebar />
+          </Grid>
+          <Grid gridArea={'main'} alignContent={'start'}>
+            {selectedQuestion === null ? (
+              <></>
+            ) : (
+              <LoadedScreen loading={isLoadingPanel}>
+                <View height={window.height}>
+                  <QuestionTitle />
+                  {selectedAction !== 'CrossTab' ? (
+                    <QuestionDetailsPanel />
+                  ) : (
+                    <CrossTabPanel />
+                  )}
+                </View>
+              </LoadedScreen>
+            )}
+          </Grid>
+        </Grid>
+      </LoadedScreen>
     </>
   );
 };

@@ -16,8 +16,6 @@ export type BasicStatsProps = Props;
 export const BasicStats: React.FC<PropsBase> = (_props: PropsBase) => {
   const props = (defaultValue && _props) as Props;
 
-  console.log(props);
-
   const items = Object.entries(props).map(
     (item: any): BasicStatsItemProps => ({
       heading: item[0],

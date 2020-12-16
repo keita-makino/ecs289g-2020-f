@@ -10,10 +10,9 @@ export const TwoColumnCard: React.FC<TwoColumnCardProps> = (
 ) => {
   return (
     <Grid
+      marginTop={'size-300'}
       areas={['header  divider  contents']}
       columns={['size-1600', 'size-400', 'auto']}
-      marginTop={'size-300'}
-      marginBottom={'size-300'}
       maxHeight={'size-6000'}
       width={'100%'}
     >

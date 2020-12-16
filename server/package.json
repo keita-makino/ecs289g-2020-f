@@ -1,22 +1,28 @@
 {
-  "name": "my-nexus-app-6152929641063563",
-  "license": "UNLICENSED",
-  "version": "0.0.0",
-  "dependencies": {
-    "nexus": "^0.26.1"
-  },
+  "name": "server",
+  "version": "0.1.0",
+  "description": "server",
+  "main": "src/index.ts",
   "scripts": {
-    "format": "npx prettier --write './**/*.{ts,md}'",
-    "dev": "nexus dev",
-    "build": "nexus build",
-    "start": "node .nexus/build/api"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "ts-node-dev --transpile-only --no-notify prisma/app.ts",
+    "seed": "ts-node prisma/seed.ts"
   },
-  "prettier": {
-    "semi": false,
-    "singleQuote": true,
-    "trailingComma": "all"
-  },
+  "author": "keita-makino <kemakino@ucdavis.edu>",
+  "license": "MIT",
   "devDependencies": {
-    "prettier": "^2.2.1"
+    "@prisma/cli": "^2.13.0",
+    "@types/node": "^14.14.10",
+    "ts-node": "^9.1.1",
+    "ts-node-dev": "^1.1.1",
+    "typescript": "^4.1.2"
+  },
+  "dependencies": {
+    "@nexus/schema": "^0.19.2",
+    "@prisma/client": "^2.13.0",
+    "apollo-server": "^2.19.0",
+    "axios": "^0.21.0",
+    "graphql": "^15.4.0",
+    "nexus-plugin-prisma": "^0.26.0"
   }
 }

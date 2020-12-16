@@ -2,6 +2,9 @@ import React from 'react';
 import { Flex, Grid, Text, View } from '@adobe/react-spectrum';
 import { Element } from '../../@types';
 import { useMeasure } from 'react-use';
+import { motion } from 'framer-motion';
+import { isLoadingVar } from '../../localState';
+import { useReactiveVar } from '@apollo/client';
 
 type Props = {
   contents: Element;
@@ -14,6 +17,8 @@ export const defaultValue = {
 
 export const AnswerListItem: React.FC<Props> = (props: Props) => {
   const [ref, dimension] = useMeasure<HTMLDivElement>();
+  const isLoading = useReactiveVar(isLoadingVar)['panel'];
+
   return (
     <Grid
       areas={['value  label  response', 'divider  divider  divider']}
@@ -41,19 +46,24 @@ export const AnswerListItem: React.FC<Props> = (props: Props) => {
       <Flex gridArea={'response'}>
         <div style={{ width: '100%' }} ref={ref}>
           <Flex columnGap={'size-100'}>
-            <View
-              backgroundColor={'blue-400'}
-              UNSAFE_style={{
-                height: dimension.height - 12,
-                width: `${
-                  ((dimension.width - 160) * props.contents.records.length) /
-                  props.max
-                }px`,
-                margin: 'auto 0',
-              }}
+            <motion.div
+              initial={{ scaleX: 0, transformOrigin: 'center left' }}
+              animate={{ scaleX: isLoading ? 0 : 1 }}
+              transition={{ ease: 'easeOut', duration: 1 }}
             >
-              <></>
-            </View>
+              <View
+                backgroundColor={'blue-400'}
+                UNSAFE_style={{
+                  height: dimension.height - 12,
+                  width: `${
+                    ((dimension.width - 160) * props.contents.records.length) /
+                    props.max
+                  }px`,
+                }}
+              >
+                <></>
+              </View>
+            </motion.div>
             <Text marginTop={'size-50'} marginBottom={'size-50'}>
               {props.contents.records.length}
             </Text>

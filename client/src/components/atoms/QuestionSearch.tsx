@@ -6,7 +6,7 @@ import {
   Flex,
 } from '@adobe/react-spectrum';
 import React, { useEffect, useState } from 'react';
-import { queryForQuestionVar } from '../../App';
+import { queryForQuestionVar } from '../../localState';
 
 export type QuestionSearchProps = {};
 

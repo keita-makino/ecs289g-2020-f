@@ -2,11 +2,12 @@ import React, { useRef } from 'react';
 import { Flex, Header, Heading, Text, View } from '@adobe/react-spectrum';
 import { useButton, usePress } from 'react-aria';
 import {
+  isLoadingVar,
   queryForQuestionVar,
   selectedActionVar,
   selectedQuestionForCrossTabVar,
   selectedQuestionVar,
-} from '../../App';
+} from '../../localState';
 import { useReactiveVar } from '@apollo/client';
 import Checkmark from '@spectrum-icons/workflow/Checkmark';
 
@@ -41,9 +42,13 @@ export const QuestionListItem: React.FC<PropsBase> = (_props: PropsBase) => {
   const ref = useRef(null);
   const { pressProps, isPressed } = usePress({
     onPressEnd: () => {
-      isSelectingSecondary
-        ? selectedQuestionForCrossTabVar(props.id)
-        : selectedQuestionVar(props.id);
+      if (isSelectingSecondary) {
+        selectedQuestionForCrossTabVar(props.id);
+        isLoadingVar({ ...isLoadingVar(), crossTab: true });
+      } else {
+        selectedQuestionVar(props.id);
+        isLoadingVar({ ...isLoadingVar(), panel: true });
+      }
     },
   });
 
@@ -52,8 +57,7 @@ export const QuestionListItem: React.FC<PropsBase> = (_props: PropsBase) => {
     selectedQuestionForCrossTabVar
   );
   const selectedAction = useReactiveVar(selectedActionVar);
-  const isSelectingSecondary =
-    selectedQuestionForCrossTab === null && selectedAction === 'CrossTab';
+  const isSelectingSecondary = selectedAction === 'CrossTab';
 
   return (
     <Flex direction={'column'}>
@@ -79,7 +83,13 @@ export const QuestionListItem: React.FC<PropsBase> = (_props: PropsBase) => {
             role={'gridcell'}
           >
             <Flex alignItems={'center'} columnGap={'size-100'}>
-              <Header margin={0} marginStart={`size-${props.level}00`}>
+              <Header
+                margin={0}
+                marginStart={`size-${props.level}00`}
+                UNSAFE_style={{
+                  whiteSpace: 'nowrap',
+                }}
+              >
                 {props.name}
               </Header>
               <Text

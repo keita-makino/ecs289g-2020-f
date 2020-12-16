@@ -7,8 +7,13 @@ import {
 } from '../atoms/QuestionListItem';
 import { gql, useQuery, useReactiveVar } from '@apollo/client';
 import { Scrollbar } from 'react-scrollbars-custom';
-import { queryForQuestionVar } from '../../App';
 import Axios from 'axios';
+import {
+  isEditingVar,
+  isLoadingVar,
+  queryForQuestionVar,
+} from '../../localState';
+import { LoadedScreen } from './LoadedScreen';
 
 type PropsBase = {
   name?: string;
@@ -30,9 +35,9 @@ export type QuestionListProps = Props;
 
 const QUERY = gql`
   query {
-    sections {
+    sections(orderBy: [{ name: asc }]) {
       name
-      questions {
+      questions(orderBy: [{ name: asc }]) {
         id
         text
         name
@@ -42,49 +47,75 @@ const QUERY = gql`
 `;
 
 export const QuestionList: React.FC<PropsBase> = (_props: PropsBase) => {
-  const { data } = useQuery(QUERY);
+  const { data, loading, refetch } = useQuery(QUERY);
   const [sections, setSections] = useState([defaultValue]);
   const queryForQuestion = useReactiveVar(queryForQuestionVar);
   const [searchedQuestions, setSearchedQuestions] = useState([] as any[]);
+  const isEditing = useReactiveVar(isEditingVar);
 
   useEffect(() => {
     if (data) {
       setSections(data.sections);
+      isLoadingVar({ ...isLoadingVar(), questionTitle: false });
     }
   }, [data]);
 
   useEffect(() => {
+    if (!loading) {
+      isLoadingVar({ ...isLoadingVar(), main: false });
+    }
+  }, [loading]);
+
+  useEffect(() => {
+    if (!isEditing['questionTitle']) {
+      console.log();
+      refetch();
+    }
+  }, [isEditing, refetch]);
+
+  useEffect(() => {
     if (queryForQuestion && queryForQuestion.length > 0) {
+      isLoadingVar({ ...isLoadingVar(), search: true });
       Axios.get('http://localhost:7071/api/HttpTrigger1', {
         params: {
           query: queryForQuestion,
         },
       }).then((response) => {
         setSearchedQuestions(response.data);
+        isLoadingVar({ ...isLoadingVar(), search: false });
       });
     }
   }, [queryForQuestion]);
 
   return (
-    <View width={'100%'} height={'100%'}>
-      <Scrollbar style={{ width: '100%', height: '100%' }}>
-        {queryForQuestion && searchedQuestions.length > 0 ? (
-          <Flex direction={'column'}>
-            <>
+    <View
+      width={'100%'}
+      height={'100%'}
+      paddingTop={'size-200'}
+      paddingBottom={'size-200'}
+    >
+      <Scrollbar style={{ width: '100%', height: '100%' }} noScrollX>
+        {queryForQuestion ? (
+          <LoadedScreen loading={isLoadingVar()['search']}>
+            <Flex direction={'column'} minHeight={'size-5000'}>
               {searchedQuestions.map((item) => (
                 <QuestionListItem {...item} />
               ))}
-            </>
-          </Flex>
+            </Flex>
+          </LoadedScreen>
         ) : sections ? (
-          sections.map((section) => (
-            <Flex direction={'column'}>
+          <Flex direction={'column'} rowGap={'size-100'}>
+            {sections.map((section) => (
               <View width={'100%'}>
                 {!section.level ? (
-                  <Heading level={3} marginBottom={0}>
-                    {section.name}
-                  </Heading>
-                ) : null}
+                  <>
+                    <Heading level={3} margin={0}>
+                      {section.name}
+                    </Heading>
+                  </>
+                ) : (
+                  <></>
+                )}
                 <Flex>
                   <Flex width={'size-200'}>
                     <Divider
@@ -106,9 +137,11 @@ export const QuestionList: React.FC<PropsBase> = (_props: PropsBase) => {
                   </View>
                 </Flex>
               </View>
-            </Flex>
-          ))
-        ) : null}
+            ))}
+          </Flex>
+        ) : (
+          <></>
+        )}
       </Scrollbar>
     </View>
   );

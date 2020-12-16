@@ -10,38 +10,13 @@ import {
 } from '@apollo/client';
 import Index from './pages/Index';
 import { hot } from 'react-hot-loader';
-
-export const selectedQuestionVar = makeVar<string | null>(null);
-export const selectedQuestionForCrossTabVar = makeVar<string | null>(null);
-export const selectedActionVar = makeVar<string | null>(null);
-export const queryForQuestionVar = makeVar<string | null>(null);
+import { fields } from './localState';
 
 const cache = new InMemoryCache({
   resultCaching: true,
   typePolicies: {
     Query: {
-      fields: {
-        selectedQuestion: {
-          read() {
-            return selectedQuestionVar();
-          },
-        },
-        selectedQuestionForCrossTab: {
-          read() {
-            return selectedQuestionForCrossTabVar();
-          },
-        },
-        selectedAction: {
-          read() {
-            return selectedActionVar();
-          },
-        },
-        queryForQuestion: {
-          read() {
-            return queryForQuestionVar();
-          },
-        },
-      },
+      fields,
     },
   },
 });

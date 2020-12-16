@@ -1,15 +1,8 @@
-import {
-  ActionButton,
-  Content,
-  Flex,
-  Heading,
-  IllustratedMessage,
-  Text,
-  View,
-} from '@adobe/react-spectrum';
-import React, { useRef, useState } from 'react';
-import { usePress } from 'react-aria';
-import { selectedActionVar } from '../../App';
+import { ActionButton, Content, Heading } from '@adobe/react-spectrum';
+import Magnify from '@spectrum-icons/workflow/Magnify';
+import ModernGridView from '@spectrum-icons/workflow/ModernGridView';
+import React from 'react';
+import { selectedActionVar } from '../../localState';
 
 type PropsBase = { type: 'CrossTab' | 'SimilaritySearch' | null };
 export const defaultValue = { type: 'CrossTab' as PropsBase['type'] };
@@ -22,60 +15,57 @@ export { defaultValue as actionTriggerDefaultValue };
 export type ActionTriggerProps = Props;
 
 const getMessage = (props: Props) => {
-  let text;
+  const content = { text: 'return', icon: () => <></> };
+
   switch (props.type) {
     case 'CrossTab':
-      text = 'Cross-Tab';
+      content.text = 'Cross-Tab';
+      content.icon = () => <ModernGridView />;
       break;
     case 'SimilaritySearch':
-      text = 'Explore';
+      content.text = 'Explore';
+      content.icon = () => <Magnify />;
       break;
     default:
-      text = 'return';
+      content.text = 'return';
       break;
   }
   return (
-    <IllustratedMessage>
-      <Heading>{text}</Heading>
-    </IllustratedMessage>
+    <Content>
+      {content.icon()}
+      <Heading level={4} margin={0}>
+        {content.text}
+      </Heading>
+    </Content>
   );
 };
 
 export const ActionTrigger: React.FC<PropsBase> = (_props: PropsBase) => {
   const props = (defaultValue && _props) as Props;
-  const ref = useRef(null);
-  const { pressProps, isPressed } = usePress({
-    onPress: () => {
-      selectedActionVar(props.type);
-    },
-  });
+  const isExploring = selectedActionVar() === 'SimilaritySearch';
 
   return (
     <ActionButton
-      width={props.type ? 'size-2000' : 'size-1600'}
-      height={props.type ? 'size-2000' : 'size-800'}
+      width={props.type ? '100%' : 'size-1600'}
+      height={props.type ? '100%' : 'size-800'}
       position={props.type ? 'relative' : 'fixed'}
       bottom={props.type ? 'unset' : '2rem'}
+      onPressEnd={() => {
+        if (props.type === selectedActionVar()) {
+          selectedActionVar(null);
+        } else {
+          selectedActionVar(props.type);
+        }
+      }}
+      UNSAFE_style={{
+        backgroundColor:
+          isExploring && props.type === 'SimilaritySearch'
+            ? 'rgba(200,255,255,0.4)'
+            : 'unset',
+        cursor: 'pointer',
+      }}
     >
-      <div
-        {...pressProps}
-        ref={ref}
-        style={{
-          background: isPressed ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0)',
-          cursor: 'pointer',
-          padding: '0.2rem',
-          width: '100%',
-          height: '100%',
-        }}
-        role={'gridcell'}
-        onClick={() => {
-          // selectedQuestionVar(props.id);
-        }}
-      >
-        <Flex justifyContent={'center'} alignContent={'center'} height={'100%'}>
-          {getMessage(props)}
-        </Flex>
-      </div>
+      {getMessage(props)}
     </ActionButton>
   );
 };

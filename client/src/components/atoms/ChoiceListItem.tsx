@@ -1,6 +1,14 @@
 import React from 'react';
-import { Flex, Grid, Text } from '@adobe/react-spectrum';
+import {
+  Flex,
+  Grid,
+  Radio,
+  RadioGroup,
+  Switch,
+  Text,
+} from '@adobe/react-spectrum';
 import { Element } from '../../@types';
+import { filterVar } from '../../localState';
 
 type Props = {
   contents: Element;
@@ -12,8 +20,8 @@ export const defaultValue = {
 export const ChoiceListItem: React.FC<Props> = (props: Props) => {
   return (
     <Grid
-      areas={['value  label  responses']}
-      columns={['size-1200', 'auto']}
+      areas={['value  label  filter']}
+      columns={['size-1200', 'auto', 'size-2000']}
       gap={'size-200'}
     >
       <Flex gridArea={'value'}>
@@ -33,6 +41,18 @@ export const ChoiceListItem: React.FC<Props> = (props: Props) => {
         >
           {props.contents.label}
         </Text>
+      </Flex>
+      <Flex gridArea={'filter'} UNSAFE_style={{ cursor: 'pointer' }}>
+        <Switch
+          aria-label={props.contents.label}
+          onChange={(isSelected: boolean) => {
+            if (isSelected) {
+              filterVar(null);
+            } else {
+              filterVar(props.contents.id);
+            }
+          }}
+        />
       </Flex>
     </Grid>
   );

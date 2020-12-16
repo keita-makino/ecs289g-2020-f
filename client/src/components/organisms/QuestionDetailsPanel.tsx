@@ -1,14 +1,21 @@
-import { Divider, Flex, Heading, View } from '@adobe/react-spectrum';
+import { View } from '@adobe/react-spectrum';
 import { gql, useQuery, useReactiveVar } from '@apollo/client';
 import React, { useEffect, useState } from 'react';
-import { QuestionDetails } from '../../@types/QuestionDetails';
-import { selectedQuestionVar } from '../../App';
-import { EditButton } from '../atoms/EditButton';
+import {
+  filterVar,
+  isLoadingVar,
+  selectedActionVar,
+  selectedQuestionVar,
+  sortByVar,
+  sortByVarInitial,
+} from '../../localState';
 import { BasicStats } from '../molecules/BasicStats';
-import { getBasicStats } from '../../utils/getBasicStas';
+import { getBasicStats } from '../../utils/getBasicStats';
 import { ChoiceList } from '../molecules/ChoiceList';
 import { AnswerList } from '../molecules/AnswerList';
 import { ActionPanel } from '../molecules/ActionPanel';
+import { QuestionDetails } from '../../@types';
+import { ExplorePanel } from '../molecules/ExplorePanel';
 
 type PropsBase = {};
 export const defaultValue: QuestionDetails = {
@@ -55,8 +62,10 @@ const QUERY = gql`
 export const QuestionDetailsPanel: React.FC<PropsBase> = (
   _props: PropsBase
 ) => {
-  const selectedQuestion = useReactiveVar(selectedQuestionVar);
-  const { data } = useQuery(QUERY, {
+  const _selectedQuestion = useReactiveVar(selectedQuestionVar);
+  const selectedAction = useReactiveVar(selectedActionVar);
+  const [selectedQuestion, setSelectedQuestion] = useState(_selectedQuestion);
+  const { data, loading } = useQuery(QUERY, {
     variables: { id: selectedQuestion },
   });
   const [questionDetails, setQuestionDetails] = useState<QuestionDetails>(
@@ -64,10 +73,19 @@ export const QuestionDetailsPanel: React.FC<PropsBase> = (
   );
 
   useEffect(() => {
+    setTimeout(() => {
+      setSelectedQuestion(_selectedQuestion);
+      filterVar(null);
+      sortByVar(sortByVarInitial);
+    }, 1000);
+  }, [_selectedQuestion]);
+
+  useEffect(() => {
+    isLoadingVar({ ...isLoadingVar(), panel: loading });
     if (data) {
       setQuestionDetails(data.question || defaultValue);
     }
-  }, [data]);
+  }, [data, loading]);
 
   return (
     <View>
@@ -89,6 +107,9 @@ export const QuestionDetailsPanel: React.FC<PropsBase> = (
         <AnswerList elements={questionDetails.elements} isTextEntry />
       ) : null}
       <ActionPanel />
+      {selectedAction === 'SimilaritySearch' ? (
+        <ExplorePanel text={questionDetails.text} />
+      ) : null}
     </View>
   );
 };

@@ -1,24 +1,20 @@
-import { ActionButton, Flex, Grid, Text, View } from '@adobe/react-spectrum';
+import { Flex, Grid, Text, View } from '@adobe/react-spectrum';
 import { gql, useReactiveVar, useQuery } from '@apollo/client';
 import ChevronLeft from '@spectrum-icons/workflow/ChevronLeft';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useMeasure } from 'react-use';
-import { selectedQuestionVar, selectedQuestionForCrossTabVar } from '../../App';
+import {
+  selectedQuestionVar,
+  selectedQuestionForCrossTabVar,
+  isLoadingVar,
+} from '../../localState';
 import { ActionTrigger } from '../atoms/ActionTrigger';
 import { CrossTabQuestions } from '../molecules/CrossTabQuestions';
 import { TwoColumnCard } from '../utils/TwoColumnCard';
 
-import { ResponsiveHeatMap } from '@nivo/heatmap';
-
-type PropsBase = {};
-export const defaultValue = {};
-const PropsDefault: Required<
-  Pick<PropsBase, { [Key in keyof PropsBase]-?: Key }[keyof PropsBase]>
-> = defaultValue;
-type Props = PropsBase & typeof PropsDefault;
-
-export { defaultValue as crossTabPanelDefaultValue };
-export type CrossTabPanelProps = Props;
+import { HeatMapPanel } from '../molecules/HeatMapPanel';
+import { QuestionDetails } from '../../@types';
+import { LoadedScreen } from '../molecules/LoadedScreen';
 
 const QUERY = gql`
   query GET_QUESTION($id: String!) {
@@ -44,58 +40,73 @@ const QUERY = gql`
   }
 `;
 
-export const CrossTabPanel: React.FC<PropsBase> = (_props: PropsBase) => {
-  const props = (defaultValue && _props) as Props;
+export const CrossTabPanel: React.FC = () => {
   const [ref, dimension] = useMeasure<HTMLDivElement>();
   const selectedQuestions = [
     useReactiveVar(selectedQuestionVar),
     useReactiveVar(selectedQuestionForCrossTabVar),
   ];
 
-  const { data: dataPrimary } = useQuery(QUERY, {
+  const { data: dataPrimary } = useQuery<{ question: QuestionDetails }>(QUERY, {
     variables: { id: selectedQuestions[0] },
   });
-  const { data: dataSecondary } = useQuery(QUERY, {
+  const { data: dataSecondary, loading } = useQuery<{
+    question: QuestionDetails;
+  }>(QUERY, {
     variables: { id: selectedQuestions[1] },
   });
 
+  const isLoading = isLoadingVar()['crossTab'];
+
+  useEffect(() => {
+    isLoadingVar({ ...isLoadingVar(), crossTab: loading });
+  }, [loading]);
+
   return (
-    <View>
+    <Grid alignContent={'stretch'} rows={['auto', '1fr']}>
       {selectedQuestions[1] ? null : (
         <Flex
-          justifyContent={'center'}
+          columnGap={'size-100'}
           alignItems={'center'}
+          justifyContent={'center'}
           width={dimension.width}
           height={dimension.height}
           UNSAFE_style={{
             position: 'absolute',
-            backgroundColor: 'rgba(255,255,255,0.2)',
-            backdropFilter: 'blur(4px)',
+            backgroundColor: 'rgba(224,255,255,0.25)',
+            backdropFilter: 'blur(3px)',
             zIndex: 200,
           }}
         >
-          <Flex columnGap={'size-100'} alignItems={'center'}>
-            <ChevronLeft size={'L'} />
-            <Flex>
-              <Text>
-                Select secondary question to view a cross-tab analysis.
-              </Text>
-            </Flex>
+          <ChevronLeft size={'L'} />
+          <Flex>
+            <Text>
+              Select the secondary question to view a cross-tab analysis.
+            </Text>
           </Flex>
         </Flex>
       )}
-      <Grid width={'100%'}>
-        <div ref={ref}>
-          <ActionTrigger type={null} />
-          <TwoColumnCard title={'Cross-Tab'}>
-            <CrossTabQuestions
-              primary={dataPrimary?.question.name}
-              secondary={dataSecondary?.question.name}
-            />
-          </TwoColumnCard>
-        </div>
-      </Grid>
-    </View>
+      <View position={'fixed'} bottom={'size-600'}>
+        <ActionTrigger type={null} />
+      </View>
+      <LoadedScreen loading={isLoading}>
+        <Grid width={'100%'}>
+          <div ref={ref}>
+            <TwoColumnCard title={'Cross-Tab'}>
+              <CrossTabQuestions
+                primary={dataPrimary?.question.name}
+                secondary={dataSecondary?.question.name}
+              />
+            </TwoColumnCard>
+          </div>
+        </Grid>
+      </LoadedScreen>
+      {dataPrimary !== undefined && dataSecondary !== undefined ? (
+        <HeatMapPanel
+          primaryElements={dataPrimary.question.elements}
+          secondaryElements={dataSecondary.question.elements}
+        />
+      ) : null}
+    </Grid>
   );
 };
-CrossTabPanel.defaultProps = defaultValue;

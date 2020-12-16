@@ -8,6 +8,7 @@ export type Element = {
   };
   records: {
     id: string;
+    elements: Element[];
   }[];
   isChoice?: boolean;
   isAnswer?: boolean;

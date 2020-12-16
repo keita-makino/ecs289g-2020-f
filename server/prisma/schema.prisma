@@ -1,0 +1,85 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id      String   @id @default(uuid())
+  records Record[]
+}
+
+model Record {
+  id       String    @id @default(uuid())
+  meta     Json
+  elements Element[] @relation(references: [id])
+  user     User      @relation(fields: [userId], references: [id])
+  userId   String
+  time     DateTime  @default(now())
+  Survey   Survey?   @relation(fields: [surveyId], references: [id])
+  surveyId String?
+}
+
+model Element {
+  id            String    @id @default(uuid())
+  value         Int
+  label         String?
+  details       Json?
+  records       Record[]  @relation(references: [id])
+  question      Question? @relation(fields: [questionId], references: [id])
+  issue         Issue?    @relation(fields: [issueId], references: [id])
+  isChoice      Boolean   @default(false)
+  isAnswer      Boolean   @default(false)
+  isTextAllowed Boolean   @default(false)
+  questionId    String?
+  issueId       String?
+  time          DateTime  @default(now())
+  embedding     Float[]
+}
+
+model Survey {
+  id       String    @id @default(uuid())
+  name     String
+  sections Section[]
+  Record   Record[]
+}
+
+model Section {
+  id        String     @id @default(uuid())
+  name      String
+  questions Question[]
+  survey    Survey     @relation(fields: [surveyId], references: [id])
+  surveyId  String
+}
+
+model Question {
+  id          String     @id @default(uuid())
+  qid         String
+  name        String
+  tag         String
+  text        String
+  type        String
+  selector    String
+  subSelector String?
+  section     Section?   @relation(fields: [sectionId], references: [id])
+  categories  Question[] @relation("questionToCategories")
+  elements    Element[]
+  question    Question?  @relation("questionToCategories", fields: [questionId], references: [id])
+  sectionId   String?
+  questionId  String?
+  embedding   Float[]
+}
+
+model Issue {
+  id              String    @id @default(uuid())
+  name            String
+  referenceNumber Int[]
+  text            String
+  elements        Element[]
+}
