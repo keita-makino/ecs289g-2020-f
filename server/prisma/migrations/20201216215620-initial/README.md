@@ -1,39 +1,30 @@
-# Migration `20201212100249-initial`
+# Migration `20201216215620-initial`
 
-This migration has been generated at 12/12/2020, 2:02:50 AM.
+This migration has been generated at 12/16/2020, 1:56:20 PM.
 You can check out the [state of the schema](./schema.prisma) after the migration.
 
 ## Database Steps
 
 ```sql
-CREATE TABLE "User" (
-    "id" TEXT NOT NULL,
-
-    PRIMARY KEY ("id")
-)
-
-CREATE TABLE "Record" (
-    "id" TEXT NOT NULL,
-    "meta" JSONB NOT NULL,
-    "userId" TEXT NOT NULL,
-    "time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "surveyId" TEXT,
-
-    PRIMARY KEY ("id")
-)
-
 CREATE TABLE "Element" (
     "id" TEXT NOT NULL,
-    "value" INTEGER NOT NULL,
-    "label" TEXT,
-    "details" JSONB,
-    "isChoice" BOOLEAN NOT NULL DEFAULT false,
-    "isAnswer" BOOLEAN NOT NULL DEFAULT false,
-    "isTextAllowed" BOOLEAN NOT NULL DEFAULT false,
+    "time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "questionId" TEXT,
     "issueId" TEXT,
-    "time" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "choiceId" TEXT,
+
+    PRIMARY KEY ("id")
+)
+
+CREATE TABLE "Choice" (
+    "id" TEXT NOT NULL,
+    "value" INTEGER NOT NULL,
+    "label" TEXT NOT NULL,
+    "isTextAllowed" BOOLEAN NOT NULL DEFAULT false,
+    "details" TEXT,
     "embedding" DECIMAL(65,30)[],
+    "toElementFromChoiceId" TEXT,
+    "toElementFromAnswerId" TEXT,
 
     PRIMARY KEY ("id")
 )
@@ -83,17 +74,21 @@ CREATE TABLE "_ElementToRecord" (
     "B" TEXT NOT NULL
 )
 
+CREATE UNIQUE INDEX "Choice_toElementFromChoiceId_unique" ON "Choice"("toElementFromChoiceId")
+
+CREATE UNIQUE INDEX "Choice_toElementFromAnswerId_unique" ON "Choice"("toElementFromAnswerId")
+
 CREATE UNIQUE INDEX "_ElementToRecord_AB_unique" ON "_ElementToRecord"("A", "B")
 
 CREATE INDEX "_ElementToRecord_B_index" ON "_ElementToRecord"("B")
 
-ALTER TABLE "Record" ADD FOREIGN KEY("userId")REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE
-
-ALTER TABLE "Record" ADD FOREIGN KEY("surveyId")REFERENCES "Survey"("id") ON DELETE SET NULL ON UPDATE CASCADE
-
 ALTER TABLE "Element" ADD FOREIGN KEY("questionId")REFERENCES "Question"("id") ON DELETE SET NULL ON UPDATE CASCADE
 
 ALTER TABLE "Element" ADD FOREIGN KEY("issueId")REFERENCES "Issue"("id") ON DELETE SET NULL ON UPDATE CASCADE
+
+ALTER TABLE "Choice" ADD FOREIGN KEY("toElementFromChoiceId")REFERENCES "Element"("id") ON DELETE SET NULL ON UPDATE CASCADE
+
+ALTER TABLE "Choice" ADD FOREIGN KEY("toElementFromAnswerId")REFERENCES "Element"("id") ON DELETE SET NULL ON UPDATE CASCADE
 
 ALTER TABLE "Section" ADD FOREIGN KEY("surveyId")REFERENCES "Survey"("id") ON DELETE CASCADE ON UPDATE CASCADE
 
@@ -104,16 +99,20 @@ ALTER TABLE "Question" ADD FOREIGN KEY("questionId")REFERENCES "Question"("id") 
 ALTER TABLE "_ElementToRecord" ADD FOREIGN KEY("A")REFERENCES "Element"("id") ON DELETE CASCADE ON UPDATE CASCADE
 
 ALTER TABLE "_ElementToRecord" ADD FOREIGN KEY("B")REFERENCES "Record"("id") ON DELETE CASCADE ON UPDATE CASCADE
+
+ALTER TABLE "Record" ADD FOREIGN KEY("userId")REFERENCES "User"("id") ON DELETE CASCADE ON UPDATE CASCADE
+
+ALTER TABLE "Record" ADD FOREIGN KEY("surveyId")REFERENCES "Survey"("id") ON DELETE SET NULL ON UPDATE CASCADE
 ```
 
 ## Changes
 
 ```diff
 diff --git schema.prisma schema.prisma
-migration ..20201212100249-initial
+migration ..20201216215620-initial
 --- datamodel.dml
 +++ datamodel.dml
-@@ -1,0 +1,85 @@
+@@ -1,0 +1,94 @@
 +// This is your Prisma schema file,
 +// learn more about it in the docs: https://pris.ly/d/prisma-schema
 +
@@ -143,20 +142,29 @@ migration ..20201212100249-initial
 +}
 +
 +model Element {
-+  id            String    @id @default(uuid())
-+  value         Int
-+  label         String?
-+  details       Json?
-+  records       Record[]  @relation(references: [id])
-+  question      Question? @relation(fields: [questionId], references: [id])
-+  issue         Issue?    @relation(fields: [issueId], references: [id])
-+  isChoice      Boolean   @default(false)
-+  isAnswer      Boolean   @default(false)
-+  isTextAllowed Boolean   @default(false)
-+  questionId    String?
-+  issueId       String?
-+  time          DateTime  @default(now())
-+  embedding     Float[]
++  id         String    @id @default(uuid())
++  records    Record[]  @relation(references: [id])
++  question   Question? @relation(fields: [questionId], references: [id])
++  issue      Issue?    @relation(fields: [issueId], references: [id])
++  choice     Choice?   @relation("choice")
++  answer     Choice?   @relation("answer")
++  time       DateTime  @default(now())
++  questionId String?
++  issueId    String?
++  choiceId   String?
++}
++
++model Choice {
++  id                    String   @id @default(uuid())
++  value                 Int
++  label                 String
++  isTextAllowed         Boolean  @default(false)
++  details               String?
++  embedding             Float[]
++  toElementFromChoice   Element? @relation("choice", fields: [toElementFromChoiceId], references: [id])
++  toElementFromAnswer   Element? @relation("answer", fields: [toElementFromAnswerId], references: [id])
++  toElementFromChoiceId String?
++  toElementFromAnswerId String?
 +}
 +
 +model Survey {

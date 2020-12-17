@@ -1,15 +1,15 @@
 export type Element = {
   id: string;
-  value: number;
-  label: string;
-  details?: {
-    text: string;
-    choice: number;
-  };
   records: {
     id: string;
-    elements: Element[];
   }[];
-  isChoice?: boolean;
-  isAnswer?: boolean;
+  choice: Choice;
+  answer: Choice;
+};
+
+export type Choice = {
+  id: string;
+  value: number;
+  label: string;
+  details?: string;
 };

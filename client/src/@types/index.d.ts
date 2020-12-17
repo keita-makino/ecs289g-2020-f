@@ -1,2 +1,2 @@
 export { QuestionDetails } from './QuestionDetails';
-export { Element } from './Element';
+export { Element, Choice } from './Element';

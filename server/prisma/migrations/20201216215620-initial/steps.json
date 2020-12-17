@@ -351,27 +351,6 @@
     {
       "tag": "CreateField",
       "model": "Element",
-      "field": "value",
-      "type": "Int",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Element",
-      "field": "label",
-      "type": "String",
-      "arity": "Optional"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Element",
-      "field": "details",
-      "type": "Json",
-      "arity": "Optional"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Element",
       "field": "records",
       "type": "Record",
       "arity": "List"
@@ -496,112 +475,66 @@
     {
       "tag": "CreateField",
       "model": "Element",
-      "field": "isChoice",
-      "type": "Boolean",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Element",
-          "field": "isChoice"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Element",
-          "field": "isChoice"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "false"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Element",
-      "field": "isAnswer",
-      "type": "Boolean",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Element",
-          "field": "isAnswer"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Element",
-          "field": "isAnswer"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "false"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Element",
-      "field": "isTextAllowed",
-      "type": "Boolean",
-      "arity": "Required"
-    },
-    {
-      "tag": "CreateDirective",
-      "location": {
-        "path": {
-          "tag": "Field",
-          "model": "Element",
-          "field": "isTextAllowed"
-        },
-        "directive": "default"
-      }
-    },
-    {
-      "tag": "CreateArgument",
-      "location": {
-        "tag": "Directive",
-        "path": {
-          "tag": "Field",
-          "model": "Element",
-          "field": "isTextAllowed"
-        },
-        "directive": "default"
-      },
-      "argument": "",
-      "value": "false"
-    },
-    {
-      "tag": "CreateField",
-      "model": "Element",
-      "field": "questionId",
-      "type": "String",
+      "field": "choice",
+      "type": "Choice",
       "arity": "Optional"
     },
     {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Element",
+          "field": "choice"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Element",
+          "field": "choice"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"choice\""
+    },
+    {
       "tag": "CreateField",
       "model": "Element",
-      "field": "issueId",
-      "type": "String",
+      "field": "answer",
+      "type": "Choice",
       "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Element",
+          "field": "answer"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Element",
+          "field": "answer"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"answer\""
     },
     {
       "tag": "CreateField",
@@ -638,9 +571,264 @@
     {
       "tag": "CreateField",
       "model": "Element",
+      "field": "questionId",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Element",
+      "field": "issueId",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Element",
+      "field": "choiceId",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateModel",
+      "model": "Choice"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
+      "field": "id",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "id"
+        },
+        "directive": "id"
+      }
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "id"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "id"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "uuid()"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
+      "field": "value",
+      "type": "Int",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
+      "field": "label",
+      "type": "String",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
+      "field": "isTextAllowed",
+      "type": "Boolean",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "isTextAllowed"
+        },
+        "directive": "default"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "isTextAllowed"
+        },
+        "directive": "default"
+      },
+      "argument": "",
+      "value": "false"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
+      "field": "details",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
       "field": "embedding",
       "type": "Float",
       "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
+      "field": "toElementFromChoice",
+      "type": "Element",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "toElementFromChoice"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "toElementFromChoice"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"choice\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "toElementFromChoice"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[toElementFromChoiceId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "toElementFromChoice"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
+      "field": "toElementFromAnswer",
+      "type": "Element",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "toElementFromAnswer"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "toElementFromAnswer"
+        },
+        "directive": "relation"
+      },
+      "argument": "",
+      "value": "\"answer\""
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "toElementFromAnswer"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[toElementFromAnswerId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "Choice",
+          "field": "toElementFromAnswer"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
+      "field": "toElementFromChoiceId",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Choice",
+      "field": "toElementFromAnswerId",
+      "type": "String",
+      "arity": "Optional"
     },
     {
       "tag": "CreateModel",

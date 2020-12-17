@@ -37,7 +37,12 @@ export const QuestionTitle: React.FC<QuestionTitleProps> = (
     <>
       <Flex justifyContent={'start'} minWidth={'size-3600'}>
         <LoadedScreen loading={isLoading} size={'M'}>
-          <Flex direction={'row'} alignItems={'center'} height={'size-1000'}>
+          <Flex
+            direction={'row'}
+            alignItems={'center'}
+            minWidth={'size-3600'}
+            height={'size-1000'}
+          >
             {isEditing ? (
               <TextField
                 label={null}

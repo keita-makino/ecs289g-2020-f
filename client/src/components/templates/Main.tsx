@@ -12,6 +12,7 @@ import {
 } from '../../localState';
 import { CrossTabPanel } from '../organisms/CrossTabPanel';
 import { LoadedScreen } from '../molecules/LoadedScreen';
+import Scrollbar from 'react-scrollbars-custom';
 
 type Props = {};
 
@@ -40,14 +41,19 @@ export const Main: React.FC<Props> = () => {
               <></>
             ) : (
               <LoadedScreen loading={isLoadingPanel}>
-                <View height={window.height}>
-                  <QuestionTitle />
-                  {selectedAction !== 'CrossTab' ? (
-                    <QuestionDetailsPanel />
-                  ) : (
-                    <CrossTabPanel />
-                  )}
-                </View>
+                <Scrollbar
+                  style={{ width: '100%', height: window.height }}
+                  noScrollX
+                >
+                  <View height={window.height}>
+                    <QuestionTitle />
+                    {selectedAction !== 'CrossTab' ? (
+                      <QuestionDetailsPanel />
+                    ) : (
+                      <CrossTabPanel />
+                    )}
+                  </View>
+                </Scrollbar>
               </LoadedScreen>
             )}
           </Grid>

@@ -3,9 +3,10 @@ import { v4 } from 'uuid';
 import { recodeValue } from './recodeValue';
 import { getNumberOrUndefined } from './getNumberOrUndefined';
 
-type Choice = {
+export type Choice = {
   value: number;
   label: string;
+  details?: string;
   isTextAllowed?: boolean;
 };
 

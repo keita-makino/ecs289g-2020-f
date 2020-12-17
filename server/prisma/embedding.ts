@@ -32,16 +32,62 @@ export const embeddingQuestions = async (survey: any) => {
   };
 };
 
-export const embeddingElements = async (array: any) => {
-  const questionTextArray = array.map(
-    (item: { label: any }) => item.label || ""
-  );
-  const embeddingArray = await Axios.post(
+export const embeddingElements = async (array: any[]) => {
+  const questionTextArray1 = array
+    .filter((item: { choice: any }) => item.choice)
+    .map((item: { choice: { create: any } }) => item.choice.create.label)
+    .filter((item, index, array) => array.indexOf(item) === index);
+  const embeddingArray1 = await Axios.post(
     "http://localhost:7071/api/HttpTrigger2",
-    questionTextArray
+    questionTextArray1
   );
-  return array.map((element: any, index: string | number) => ({
-    ...element,
-    embedding: embeddingArray.data[index].embedded,
-  }));
+
+  const result1 = array.map((item) => {
+    if (item.choice) {
+      return {
+        ...item,
+        choice: {
+          create: {
+            ...item.choice.create,
+            embedding:
+              embeddingArray1.data[
+                questionTextArray1.indexOf(item.choice.create.label)
+              ].embedded,
+          },
+        },
+      };
+    } else {
+      return item;
+    }
+  });
+
+  const questionTextArray2 = array
+    .filter((item: { answer: any }) => item.answer)
+    .map((item: { answer: { create: any } }) => item.answer.create.label)
+    .filter((item, index, array) => array.indexOf(item) === index);
+  const embeddingArray2 = await Axios.post(
+    "http://localhost:7071/api/HttpTrigger2",
+    questionTextArray2
+  );
+
+  const result2 = result1.map((item) => {
+    if (item.answer) {
+      return {
+        ...item,
+        answer: {
+          create: {
+            ...item.answer.create,
+            embedding:
+              embeddingArray2.data[
+                questionTextArray2.indexOf(item.answer.create.label)
+              ].embedded,
+          },
+        },
+      };
+    } else {
+      return item;
+    }
+  });
+
+  return result2;
 };

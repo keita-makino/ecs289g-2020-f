@@ -7,6 +7,7 @@ import {
   selectedQuestionVar,
   selectedQuestionForCrossTabVar,
   isLoadingVar,
+  filterVar,
 } from '../../localState';
 import { ActionTrigger } from '../atoms/ActionTrigger';
 import { CrossTabQuestions } from '../molecules/CrossTabQuestions';
@@ -27,14 +28,21 @@ const QUERY = gql`
       type
       elements {
         id
-        value
-        label
+        choice {
+          id
+          value
+          label
+          details
+        }
+        answer {
+          id
+          value
+          label
+          details
+        }
         records {
           id
         }
-        details
-        isChoice
-        isAnswer
       }
     }
   }
@@ -104,7 +112,13 @@ export const CrossTabPanel: React.FC = () => {
       {dataPrimary !== undefined && dataSecondary !== undefined ? (
         <HeatMapPanel
           primaryElements={dataPrimary.question.elements}
-          secondaryElements={dataSecondary.question.elements}
+          secondaryElements={[...dataSecondary.question.elements].sort((a, b) =>
+            (a.choice.details || a.choice.label) >
+            (b.choice.details || b.choice.label)
+              ? -1
+              : 1
+          )}
+          primaryFilter={filterVar()}
         />
       ) : null}
     </Grid>

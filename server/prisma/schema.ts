@@ -1,17 +1,14 @@
 import { nexusPrisma } from "nexus-plugin-prisma";
 import {
+  booleanArg,
   extendType,
-  interfaceType,
   list,
   makeSchema,
   mutationField,
-  mutationType,
   nonNull,
   objectType,
   queryField,
-  queryType,
   stringArg,
-  unionType,
 } from "@nexus/schema";
 
 const User = objectType({
@@ -91,18 +88,46 @@ const getCrossTabRecordInfo = extendType({
   },
 });
 
-const Element = objectType({
-  name: "Element",
+const Choice = objectType({
+  name: "Choice",
   definition(t) {
     t.model.id();
     t.model.value();
     t.model.label();
     t.model.details();
+    t.model.embedding();
+    t.model.isTextAllowed();
+  },
+});
+
+const Element = objectType({
+  name: "Element",
+  definition(t) {
+    t.model.id();
     t.model.records();
     t.model.question();
-    t.model.isChoice();
-    t.model.isAnswer();
     t.model.time();
+    t.model.choice();
+    t.model.answer();
+    t.list.float("primaryEmbedding", {
+      args: {
+        isChoiceBased: booleanArg(),
+      },
+      async resolve(root, { isChoiceBased }, ctx) {
+        const result = await ctx.prisma.element.findUnique({
+          where: {
+            id: root.id,
+          },
+          include: {
+            choice: isChoiceBased,
+            answer: !isChoiceBased,
+          },
+        });
+        return isChoiceBased
+          ? result?.choice?.embedding
+          : result?.answer?.embedding;
+      },
+    });
   },
 });
 
@@ -150,12 +175,15 @@ const Query = queryField((t) => {
   t.crud.record();
   t.crud.question();
   t.crud.element();
+  t.crud.choices();
+  t.crud.choice();
 });
 
 const Mutation = mutationField((t) => {
   t.crud.createOneUser();
   t.crud.createOneElement();
   t.crud.createOneQuestion();
+  t.crud.createOneChoice();
   t.crud.createOneRecord();
   t.crud.createOneSection();
   t.crud.createOneSurvey();
@@ -176,12 +204,14 @@ const Mutation = mutationField((t) => {
   t.crud.updateOneRecord();
   t.crud.updateOneSection();
   t.crud.updateOneSurvey();
+  t.crud.updateOneChoice();
   t.crud.updateManyUser();
   t.crud.updateManyElement();
   t.crud.updateManyQuestion();
   t.crud.updateManyRecord();
   t.crud.updateManySection();
   t.crud.updateManySurvey();
+  t.crud.updateManyChoice();
 });
 
 export const schema = makeSchema({
@@ -189,6 +219,7 @@ export const schema = makeSchema({
     User,
     Record,
     Element,
+    Choice,
     Survey,
     Section,
     Question,

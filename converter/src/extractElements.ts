@@ -8,31 +8,33 @@ export const extractElements = (question: Question) => {
       elements.push(extractElements(category))
     );
   }
+
   elements.push(
-    question.choices?.map((item) => ({
-      ...item,
-      id: v4(),
-      question: {
-        connect: {
-          id: question.id,
-        },
-      },
-      isChoice: true,
-      isTextAllowed: item.isTextAllowed,
-    }))
+    question.choices?.flatMap((choice) => {
+      if (question.answers && question.answers.length > 0) {
+        return question.answers?.map((answer) => ({
+          id: v4(),
+          question: {
+            connect: {
+              id: question.id,
+            },
+          },
+          choice,
+          answer,
+        }));
+      } else {
+        return {
+          id: v4(),
+          question: {
+            connect: {
+              id: question.id,
+            },
+          },
+          choice,
+        };
+      }
+    })
   );
-  elements.push(
-    question.answers?.map((item) => ({
-      ...item,
-      id: v4(),
-      question: {
-        connect: {
-          id: question.id,
-        },
-      },
-      isAnswer: true,
-      isTextAllowed: item.isTextAllowed,
-    }))
-  );
+
   return elements.filter((item) => item).flat();
 };

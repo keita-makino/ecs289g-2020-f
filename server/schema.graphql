@@ -15,6 +15,166 @@ input BoolFilter {
   not: NestedBoolFilter
 }
 
+type Choice {
+  details: String
+  embedding: [Float!]!
+  id: String!
+  isTextAllowed: Boolean!
+  label: String!
+  value: Int!
+}
+
+input ChoiceCreateembeddingInput {
+  set: [Float!]
+}
+
+input ChoiceCreateInput {
+  details: String
+  embedding: ChoiceCreateembeddingInput
+  id: String
+  isTextAllowed: Boolean
+  label: String!
+  toElementFromAnswer: ElementCreateOneWithoutAnswerInput
+  toElementFromChoice: ElementCreateOneWithoutChoiceInput
+  value: Int!
+}
+
+input ChoiceCreateOneWithoutToElementFromAnswerInput {
+  connect: ChoiceWhereUniqueInput
+  connectOrCreate: ChoiceCreateOrConnectWithouttoElementFromAnswerInput
+  create: ChoiceCreateWithoutToElementFromAnswerInput
+}
+
+input ChoiceCreateOneWithoutToElementFromChoiceInput {
+  connect: ChoiceWhereUniqueInput
+  connectOrCreate: ChoiceCreateOrConnectWithouttoElementFromChoiceInput
+  create: ChoiceCreateWithoutToElementFromChoiceInput
+}
+
+input ChoiceCreateOrConnectWithouttoElementFromAnswerInput {
+  create: ChoiceCreateWithoutToElementFromAnswerInput!
+  where: ChoiceWhereUniqueInput!
+}
+
+input ChoiceCreateOrConnectWithouttoElementFromChoiceInput {
+  create: ChoiceCreateWithoutToElementFromChoiceInput!
+  where: ChoiceWhereUniqueInput!
+}
+
+input ChoiceCreateWithoutToElementFromAnswerInput {
+  details: String
+  embedding: ChoiceCreateembeddingInput
+  id: String
+  isTextAllowed: Boolean
+  label: String!
+  toElementFromChoice: ElementCreateOneWithoutChoiceInput
+  value: Int!
+}
+
+input ChoiceCreateWithoutToElementFromChoiceInput {
+  details: String
+  embedding: ChoiceCreateembeddingInput
+  id: String
+  isTextAllowed: Boolean
+  label: String!
+  toElementFromAnswer: ElementCreateOneWithoutAnswerInput
+  value: Int!
+}
+
+input ChoiceUpdateembeddingInput {
+  set: [Float!]
+}
+
+input ChoiceUpdateInput {
+  details: NullableStringFieldUpdateOperationsInput
+  embedding: ChoiceUpdateembeddingInput
+  id: StringFieldUpdateOperationsInput
+  isTextAllowed: BoolFieldUpdateOperationsInput
+  label: StringFieldUpdateOperationsInput
+  toElementFromAnswer: ElementUpdateOneWithoutAnswerInput
+  toElementFromChoice: ElementUpdateOneWithoutChoiceInput
+  value: IntFieldUpdateOperationsInput
+}
+
+input ChoiceUpdateManyMutationInput {
+  details: NullableStringFieldUpdateOperationsInput
+  embedding: ChoiceUpdateembeddingInput
+  id: StringFieldUpdateOperationsInput
+  isTextAllowed: BoolFieldUpdateOperationsInput
+  label: StringFieldUpdateOperationsInput
+  value: IntFieldUpdateOperationsInput
+}
+
+input ChoiceUpdateOneWithoutToElementFromAnswerInput {
+  connect: ChoiceWhereUniqueInput
+  connectOrCreate: ChoiceCreateOrConnectWithouttoElementFromAnswerInput
+  create: ChoiceCreateWithoutToElementFromAnswerInput
+  delete: Boolean
+  disconnect: Boolean
+  update: ChoiceUpdateWithoutToElementFromAnswerInput
+  upsert: ChoiceUpsertWithoutToElementFromAnswerInput
+}
+
+input ChoiceUpdateOneWithoutToElementFromChoiceInput {
+  connect: ChoiceWhereUniqueInput
+  connectOrCreate: ChoiceCreateOrConnectWithouttoElementFromChoiceInput
+  create: ChoiceCreateWithoutToElementFromChoiceInput
+  delete: Boolean
+  disconnect: Boolean
+  update: ChoiceUpdateWithoutToElementFromChoiceInput
+  upsert: ChoiceUpsertWithoutToElementFromChoiceInput
+}
+
+input ChoiceUpdateWithoutToElementFromAnswerInput {
+  details: NullableStringFieldUpdateOperationsInput
+  embedding: ChoiceUpdateembeddingInput
+  id: StringFieldUpdateOperationsInput
+  isTextAllowed: BoolFieldUpdateOperationsInput
+  label: StringFieldUpdateOperationsInput
+  toElementFromChoice: ElementUpdateOneWithoutChoiceInput
+  value: IntFieldUpdateOperationsInput
+}
+
+input ChoiceUpdateWithoutToElementFromChoiceInput {
+  details: NullableStringFieldUpdateOperationsInput
+  embedding: ChoiceUpdateembeddingInput
+  id: StringFieldUpdateOperationsInput
+  isTextAllowed: BoolFieldUpdateOperationsInput
+  label: StringFieldUpdateOperationsInput
+  toElementFromAnswer: ElementUpdateOneWithoutAnswerInput
+  value: IntFieldUpdateOperationsInput
+}
+
+input ChoiceUpsertWithoutToElementFromAnswerInput {
+  create: ChoiceCreateWithoutToElementFromAnswerInput!
+  update: ChoiceUpdateWithoutToElementFromAnswerInput!
+}
+
+input ChoiceUpsertWithoutToElementFromChoiceInput {
+  create: ChoiceCreateWithoutToElementFromChoiceInput!
+  update: ChoiceUpdateWithoutToElementFromChoiceInput!
+}
+
+input ChoiceWhereInput {
+  AND: [ChoiceWhereInput!]
+  details: StringNullableFilter
+  embedding: FloatNullableListFilter
+  id: StringFilter
+  isTextAllowed: BoolFilter
+  label: StringFilter
+  NOT: [ChoiceWhereInput!]
+  OR: [ChoiceWhereInput!]
+  toElementFromAnswer: ElementWhereInput
+  toElementFromAnswerId: StringNullableFilter
+  toElementFromChoice: ElementWhereInput
+  toElementFromChoiceId: StringNullableFilter
+  value: IntFilter
+}
+
+input ChoiceWhereUniqueInput {
+  id: String
+}
+
 type CrossTabRecordInfo {
   primaryId: String
   records: [Record]
@@ -39,34 +199,24 @@ input DateTimeFilter {
 }
 
 type Element {
-  details: Json
+  answer: Choice
+  choice: Choice
   id: String!
-  isAnswer: Boolean!
-  isChoice: Boolean!
-  label: String
+  primaryEmbedding(isChoiceBased: Boolean): [Float]
   question: Question
   records(after: RecordWhereUniqueInput, before: RecordWhereUniqueInput, first: Int, last: Int): [Record!]!
   time: DateTime!
-  value: Int!
-}
-
-input ElementCreateembeddingInput {
-  set: [Float!]
 }
 
 input ElementCreateInput {
-  details: Json
-  embedding: ElementCreateembeddingInput
+  answer: ChoiceCreateOneWithoutToElementFromAnswerInput
+  choice: ChoiceCreateOneWithoutToElementFromChoiceInput
+  choiceId: String
   id: String
-  isAnswer: Boolean
-  isChoice: Boolean
   issue: IssueCreateOneWithoutElementsInput
-  isTextAllowed: Boolean
-  label: String
   question: QuestionCreateOneWithoutElementsInput
   records: RecordCreateManyWithoutElementsInput
   time: DateTime
-  value: Int!
 }
 
 input ElementCreateManyWithoutQuestionInput {
@@ -81,6 +231,28 @@ input ElementCreateManyWithoutRecordsInput {
   create: [ElementCreateWithoutRecordsInput!]
 }
 
+input ElementCreateOneWithoutAnswerInput {
+  connect: ElementWhereUniqueInput
+  connectOrCreate: ElementCreateOrConnectWithoutanswerInput
+  create: ElementCreateWithoutAnswerInput
+}
+
+input ElementCreateOneWithoutChoiceInput {
+  connect: ElementWhereUniqueInput
+  connectOrCreate: ElementCreateOrConnectWithoutchoiceInput
+  create: ElementCreateWithoutChoiceInput
+}
+
+input ElementCreateOrConnectWithoutanswerInput {
+  create: ElementCreateWithoutAnswerInput!
+  where: ElementWhereUniqueInput!
+}
+
+input ElementCreateOrConnectWithoutchoiceInput {
+  create: ElementCreateWithoutChoiceInput!
+  where: ElementWhereUniqueInput!
+}
+
 input ElementCreateOrConnectWithoutquestionInput {
   create: ElementCreateWithoutQuestionInput!
   where: ElementWhereUniqueInput!
@@ -91,32 +263,44 @@ input ElementCreateOrConnectWithoutrecordsInput {
   where: ElementWhereUniqueInput!
 }
 
-input ElementCreateWithoutQuestionInput {
-  details: Json
-  embedding: ElementCreateembeddingInput
+input ElementCreateWithoutAnswerInput {
+  choice: ChoiceCreateOneWithoutToElementFromChoiceInput
+  choiceId: String
   id: String
-  isAnswer: Boolean
-  isChoice: Boolean
   issue: IssueCreateOneWithoutElementsInput
-  isTextAllowed: Boolean
-  label: String
+  question: QuestionCreateOneWithoutElementsInput
   records: RecordCreateManyWithoutElementsInput
   time: DateTime
-  value: Int!
+}
+
+input ElementCreateWithoutChoiceInput {
+  answer: ChoiceCreateOneWithoutToElementFromAnswerInput
+  choiceId: String
+  id: String
+  issue: IssueCreateOneWithoutElementsInput
+  question: QuestionCreateOneWithoutElementsInput
+  records: RecordCreateManyWithoutElementsInput
+  time: DateTime
+}
+
+input ElementCreateWithoutQuestionInput {
+  answer: ChoiceCreateOneWithoutToElementFromAnswerInput
+  choice: ChoiceCreateOneWithoutToElementFromChoiceInput
+  choiceId: String
+  id: String
+  issue: IssueCreateOneWithoutElementsInput
+  records: RecordCreateManyWithoutElementsInput
+  time: DateTime
 }
 
 input ElementCreateWithoutRecordsInput {
-  details: Json
-  embedding: ElementCreateembeddingInput
+  answer: ChoiceCreateOneWithoutToElementFromAnswerInput
+  choice: ChoiceCreateOneWithoutToElementFromChoiceInput
+  choiceId: String
   id: String
-  isAnswer: Boolean
-  isChoice: Boolean
   issue: IssueCreateOneWithoutElementsInput
-  isTextAllowed: Boolean
-  label: String
   question: QuestionCreateOneWithoutElementsInput
   time: DateTime
-  value: Int!
 }
 
 input ElementListRelationFilter {
@@ -127,50 +311,30 @@ input ElementListRelationFilter {
 
 input ElementScalarWhereInput {
   AND: [ElementScalarWhereInput!]
-  details: JsonNullableFilter
-  embedding: FloatNullableListFilter
+  choiceId: StringNullableFilter
   id: StringFilter
-  isAnswer: BoolFilter
-  isChoice: BoolFilter
   issueId: StringNullableFilter
-  isTextAllowed: BoolFilter
-  label: StringNullableFilter
   NOT: [ElementScalarWhereInput!]
   OR: [ElementScalarWhereInput!]
   questionId: StringNullableFilter
   time: DateTimeFilter
-  value: IntFilter
-}
-
-input ElementUpdateembeddingInput {
-  set: [Float!]
 }
 
 input ElementUpdateInput {
-  details: Json
-  embedding: ElementUpdateembeddingInput
+  answer: ChoiceUpdateOneWithoutToElementFromAnswerInput
+  choice: ChoiceUpdateOneWithoutToElementFromChoiceInput
+  choiceId: NullableStringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
-  isAnswer: BoolFieldUpdateOperationsInput
-  isChoice: BoolFieldUpdateOperationsInput
   issue: IssueUpdateOneWithoutElementsInput
-  isTextAllowed: BoolFieldUpdateOperationsInput
-  label: NullableStringFieldUpdateOperationsInput
   question: QuestionUpdateOneWithoutElementsInput
   records: RecordUpdateManyWithoutElementsInput
   time: DateTimeFieldUpdateOperationsInput
-  value: IntFieldUpdateOperationsInput
 }
 
 input ElementUpdateManyMutationInput {
-  details: Json
-  embedding: ElementUpdateembeddingInput
+  choiceId: NullableStringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
-  isAnswer: BoolFieldUpdateOperationsInput
-  isChoice: BoolFieldUpdateOperationsInput
-  isTextAllowed: BoolFieldUpdateOperationsInput
-  label: NullableStringFieldUpdateOperationsInput
   time: DateTimeFieldUpdateOperationsInput
-  value: IntFieldUpdateOperationsInput
 }
 
 input ElementUpdateManyWithoutQuestionInput {
@@ -209,32 +373,64 @@ input ElementUpdateManyWithWhereWithoutRecordsInput {
   where: ElementScalarWhereInput!
 }
 
-input ElementUpdateWithoutQuestionInput {
-  details: Json
-  embedding: ElementUpdateembeddingInput
+input ElementUpdateOneWithoutAnswerInput {
+  connect: ElementWhereUniqueInput
+  connectOrCreate: ElementCreateOrConnectWithoutanswerInput
+  create: ElementCreateWithoutAnswerInput
+  delete: Boolean
+  disconnect: Boolean
+  update: ElementUpdateWithoutAnswerInput
+  upsert: ElementUpsertWithoutAnswerInput
+}
+
+input ElementUpdateOneWithoutChoiceInput {
+  connect: ElementWhereUniqueInput
+  connectOrCreate: ElementCreateOrConnectWithoutchoiceInput
+  create: ElementCreateWithoutChoiceInput
+  delete: Boolean
+  disconnect: Boolean
+  update: ElementUpdateWithoutChoiceInput
+  upsert: ElementUpsertWithoutChoiceInput
+}
+
+input ElementUpdateWithoutAnswerInput {
+  choice: ChoiceUpdateOneWithoutToElementFromChoiceInput
+  choiceId: NullableStringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
-  isAnswer: BoolFieldUpdateOperationsInput
-  isChoice: BoolFieldUpdateOperationsInput
   issue: IssueUpdateOneWithoutElementsInput
-  isTextAllowed: BoolFieldUpdateOperationsInput
-  label: NullableStringFieldUpdateOperationsInput
+  question: QuestionUpdateOneWithoutElementsInput
   records: RecordUpdateManyWithoutElementsInput
   time: DateTimeFieldUpdateOperationsInput
-  value: IntFieldUpdateOperationsInput
+}
+
+input ElementUpdateWithoutChoiceInput {
+  answer: ChoiceUpdateOneWithoutToElementFromAnswerInput
+  choiceId: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  issue: IssueUpdateOneWithoutElementsInput
+  question: QuestionUpdateOneWithoutElementsInput
+  records: RecordUpdateManyWithoutElementsInput
+  time: DateTimeFieldUpdateOperationsInput
+}
+
+input ElementUpdateWithoutQuestionInput {
+  answer: ChoiceUpdateOneWithoutToElementFromAnswerInput
+  choice: ChoiceUpdateOneWithoutToElementFromChoiceInput
+  choiceId: NullableStringFieldUpdateOperationsInput
+  id: StringFieldUpdateOperationsInput
+  issue: IssueUpdateOneWithoutElementsInput
+  records: RecordUpdateManyWithoutElementsInput
+  time: DateTimeFieldUpdateOperationsInput
 }
 
 input ElementUpdateWithoutRecordsInput {
-  details: Json
-  embedding: ElementUpdateembeddingInput
+  answer: ChoiceUpdateOneWithoutToElementFromAnswerInput
+  choice: ChoiceUpdateOneWithoutToElementFromChoiceInput
+  choiceId: NullableStringFieldUpdateOperationsInput
   id: StringFieldUpdateOperationsInput
-  isAnswer: BoolFieldUpdateOperationsInput
-  isChoice: BoolFieldUpdateOperationsInput
   issue: IssueUpdateOneWithoutElementsInput
-  isTextAllowed: BoolFieldUpdateOperationsInput
-  label: NullableStringFieldUpdateOperationsInput
   question: QuestionUpdateOneWithoutElementsInput
   time: DateTimeFieldUpdateOperationsInput
-  value: IntFieldUpdateOperationsInput
 }
 
 input ElementUpdateWithWhereUniqueWithoutQuestionInput {
@@ -245,6 +441,16 @@ input ElementUpdateWithWhereUniqueWithoutQuestionInput {
 input ElementUpdateWithWhereUniqueWithoutRecordsInput {
   data: ElementUpdateWithoutRecordsInput!
   where: ElementWhereUniqueInput!
+}
+
+input ElementUpsertWithoutAnswerInput {
+  create: ElementCreateWithoutAnswerInput!
+  update: ElementUpdateWithoutAnswerInput!
+}
+
+input ElementUpsertWithoutChoiceInput {
+  create: ElementCreateWithoutChoiceInput!
+  update: ElementUpdateWithoutChoiceInput!
 }
 
 input ElementUpsertWithWhereUniqueWithoutQuestionInput {
@@ -261,22 +467,18 @@ input ElementUpsertWithWhereUniqueWithoutRecordsInput {
 
 input ElementWhereInput {
   AND: [ElementWhereInput!]
-  details: JsonNullableFilter
-  embedding: FloatNullableListFilter
+  answer: ChoiceWhereInput
+  choice: ChoiceWhereInput
+  choiceId: StringNullableFilter
   id: StringFilter
-  isAnswer: BoolFilter
-  isChoice: BoolFilter
   issue: IssueWhereInput
   issueId: StringNullableFilter
-  isTextAllowed: BoolFilter
-  label: StringNullableFilter
   NOT: [ElementWhereInput!]
   OR: [ElementWhereInput!]
   question: QuestionWhereInput
   questionId: StringNullableFilter
   records: RecordListRelationFilter
   time: DateTimeFilter
-  value: IntFilter
 }
 
 input ElementWhereUniqueInput {
@@ -375,12 +577,8 @@ input IssueWhereUniqueInput {
 
 scalar Json
 
-input JsonNullableFilter {
-  equals: Json
-  not: Json
-}
-
 type Mutation {
+  createOneChoice(data: ChoiceCreateInput!): Choice!
   createOneElement(data: ElementCreateInput!): Element!
   createOneQuestion(data: QuestionCreateInput!): Question!
   createOneRecord(data: RecordCreateInput!): Record!
@@ -398,12 +596,14 @@ type Mutation {
   deleteOneRecord(where: RecordWhereUniqueInput!): Record
   deleteOneSection(where: SectionWhereUniqueInput!): Section
   deleteOneSurvey(where: SurveyWhereUniqueInput!): Survey
+  updateManyChoice(data: ChoiceUpdateManyMutationInput!, where: ChoiceWhereInput): BatchPayload!
   updateManyElement(data: ElementUpdateManyMutationInput!, where: ElementWhereInput): BatchPayload!
   updateManyQuestion(data: QuestionUpdateManyMutationInput!, where: QuestionWhereInput): BatchPayload!
   updateManyRecord(data: RecordUpdateManyMutationInput!, where: RecordWhereInput): BatchPayload!
   updateManySection(data: SectionUpdateManyMutationInput!, where: SectionWhereInput): BatchPayload!
   updateManySurvey(data: SurveyUpdateManyMutationInput!, where: SurveyWhereInput): BatchPayload!
   updateManyUser(data: UserUpdateManyMutationInput!, where: UserWhereInput): BatchPayload!
+  updateOneChoice(data: ChoiceUpdateInput!, where: ChoiceWhereUniqueInput!): Choice
   updateOneElement(data: ElementUpdateInput!, where: ElementWhereUniqueInput!): Element
   updateOneQuestion(data: QuestionUpdateInput!, where: QuestionWhereUniqueInput!): Question
   updateOneRecord(data: RecordUpdateInput!, where: RecordWhereUniqueInput!): Record
@@ -472,6 +672,8 @@ input NullableStringFieldUpdateOperationsInput {
 }
 
 type Query {
+  choice(where: ChoiceWhereUniqueInput!): Choice
+  choices(after: ChoiceWhereUniqueInput, before: ChoiceWhereUniqueInput, first: Int, last: Int): [Choice!]!
   crossTabRecordInfo(primaryElementIds: [String!]!, secondaryElementIds: [String!]!): [CrossTabRecordInfo]
   element(where: ElementWhereUniqueInput!): Element
   elements(after: ElementWhereUniqueInput, before: ElementWhereUniqueInput, first: Int, last: Int): [Element!]!

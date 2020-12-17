@@ -4,7 +4,7 @@ import ArrowLeft from '@spectrum-icons/workflow/ArrowLeft';
 import ChevronLeft from '@spectrum-icons/workflow/ChevronLeft';
 import Close from '@spectrum-icons/workflow/Close';
 import React from 'react';
-import { selectedQuestionForCrossTabVar } from '../../localState';
+import { filterVar, selectedQuestionForCrossTabVar } from '../../localState';
 import { Body } from '../atoms/Body';
 
 export type CrossTabQuestionsProps = { primary?: string; secondary?: string };
@@ -12,7 +12,7 @@ export type CrossTabQuestionsProps = { primary?: string; secondary?: string };
 export const CrossTabQuestions: React.FC<CrossTabQuestionsProps> = (
   props: CrossTabQuestionsProps
 ) => {
-  const isReady = useReactiveVar(selectedQuestionForCrossTabVar) !== null;
+  const filter = useReactiveVar(filterVar);
   return (
     <Grid areas={['primary', 'cross', 'secondary']}>
       <Flex direction={'row'} alignItems={'baseline'}>
@@ -25,6 +25,8 @@ export const CrossTabQuestions: React.FC<CrossTabQuestionsProps> = (
           Primary:
         </Heading>
         <Body>{props.primary}</Body>
+        <Body>{'   ---   '}</Body>
+        <Body>{filter}</Body>
       </Flex>
       <Flex marginTop={'size-50'} marginBottom={'size-50'}>
         <Close UNSAFE_style={{ opacity: 0.3 }} size={'L'} />

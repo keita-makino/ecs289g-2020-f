@@ -4,6 +4,7 @@ export const selectedQuestionVar = makeVar<string | null>(null);
 export const selectedQuestionForCrossTabVar = makeVar<string | null>(null);
 export const selectedActionVar = makeVar<string | null>(null);
 export const queryForQuestionVar = makeVar<string | null>(null);
+export const queryForChoiceVar = makeVar<string | null>(null);
 export const isLoadingVar = makeVar<{ [key: string]: boolean }>({
   main: true,
   question: false,
@@ -12,6 +13,7 @@ export const isLoadingVar = makeVar<{ [key: string]: boolean }>({
   crossTab: true,
   plot: true,
   search: true,
+  choiceSearch: false,
 });
 export const isEditingVar = makeVar<{ [key: string]: boolean }>({
   questionTitle: false,
@@ -33,6 +35,7 @@ export const sortByVar = makeVar<{
   };
 }>(sortByVarInitial);
 export const filterVar = makeVar<string | null>(null);
+export const isDarkVar = makeVar<boolean>(false);
 
 export const fields = {
   selectedQuestion: {
@@ -55,6 +58,11 @@ export const fields = {
       return queryForQuestionVar();
     },
   },
+  queryForChoice: {
+    read() {
+      return queryForChoiceVar();
+    },
+  },
   isLoading: {
     read() {
       return isLoadingVar();
@@ -73,6 +81,11 @@ export const fields = {
   filter: {
     read() {
       return filterVar();
+    },
+  },
+  isDark: {
+    read() {
+      return isDarkVar();
     },
   },
 };

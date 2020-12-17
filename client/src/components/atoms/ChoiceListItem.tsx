@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Flex,
   Grid,
@@ -7,17 +7,27 @@ import {
   Switch,
   Text,
 } from '@adobe/react-spectrum';
-import { Element } from '../../@types';
+import { Choice, Element } from '../../@types';
 import { filterVar } from '../../localState';
+import { useReactiveVar } from '@apollo/client';
+import { useState } from 'react';
 
 type Props = {
-  contents: Element;
+  contents: Choice;
 };
 export const defaultValue = {
   contents: { id: 'no id', value: 0, label: 'no text', records: [] },
 };
 
 export const ChoiceListItem: React.FC<Props> = (props: Props) => {
+  const filter = useReactiveVar(filterVar);
+  const [isSelected, setIsSelected] = useState(false);
+
+  useEffect(() => setIsSelected(filter === props.contents.label), [
+    filter,
+    props.contents.label,
+  ]);
+
   return (
     <Grid
       areas={['value  label  filter']}
@@ -45,12 +55,11 @@ export const ChoiceListItem: React.FC<Props> = (props: Props) => {
       <Flex gridArea={'filter'} UNSAFE_style={{ cursor: 'pointer' }}>
         <Switch
           aria-label={props.contents.label}
-          onChange={(isSelected: boolean) => {
-            if (isSelected) {
-              filterVar(null);
-            } else {
-              filterVar(props.contents.id);
-            }
+          isSelected={isSelected}
+          onChange={() => {
+            filterVar(
+              filter === props.contents.label ? null : props.contents.label
+            );
           }}
         />
       </Flex>

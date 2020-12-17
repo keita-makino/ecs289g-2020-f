@@ -46,14 +46,21 @@ const QUERY = gql`
       type
       elements {
         id
-        value
-        label
+        choice {
+          id
+          value
+          label
+          details
+        }
+        answer {
+          id
+          value
+          label
+          details
+        }
         records {
           id
         }
-        details
-        isChoice
-        isAnswer
       }
     }
   }
@@ -88,23 +95,30 @@ export const QuestionDetailsPanel: React.FC<PropsBase> = (
   }, [data, loading]);
 
   return (
-    <View>
+    <View paddingBottom={'size-400'}>
       <BasicStats {...getBasicStats(questionDetails)} />
       {questionDetails.type === 'MC' ? (
-        <AnswerList elements={questionDetails.elements} />
+        <AnswerList
+          elements={questionDetails.elements}
+          isChoiceBased
+          id={questionDetails.id}
+        />
       ) : null}
       {questionDetails.type === 'Matrix' ? (
         <>
-          <ChoiceList
-            elements={questionDetails.elements.filter((item) => item.isChoice)}
-          />
+          <ChoiceList elements={questionDetails.elements} />
           <AnswerList
-            elements={questionDetails.elements.filter((item) => item.isAnswer)}
+            elements={questionDetails.elements}
+            id={questionDetails.id}
           />
         </>
       ) : null}
       {questionDetails.type === 'TE' ? (
-        <AnswerList elements={questionDetails.elements} isTextEntry />
+        <AnswerList
+          id={questionDetails.id}
+          elements={questionDetails.elements}
+          isTextEntry
+        />
       ) : null}
       <ActionPanel />
       {selectedAction === 'SimilaritySearch' ? (

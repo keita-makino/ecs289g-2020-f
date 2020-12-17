@@ -1,13 +1,13 @@
 import React from 'react';
 import { Flex, Grid, Text, View } from '@adobe/react-spectrum';
-import { Element } from '../../@types';
+import { Element, Choice } from '../../@types';
 import { useMeasure } from 'react-use';
 import { motion } from 'framer-motion';
 import { isLoadingVar } from '../../localState';
 import { useReactiveVar } from '@apollo/client';
 
 type Props = {
-  contents: Element;
+  contents: Choice & { records: Element['records'] };
   max: number;
 };
 export const defaultValue = {
@@ -22,7 +22,7 @@ export const AnswerListItem: React.FC<Props> = (props: Props) => {
   return (
     <Grid
       areas={['value  label  response', 'divider  divider  divider']}
-      columns={['size-1200', 'size-5000', 'auto']}
+      columns={['size-1200', 'size-6000', 'auto']}
       columnGap={'size-200'}
     >
       <Flex gridArea={'value'}>
@@ -45,7 +45,7 @@ export const AnswerListItem: React.FC<Props> = (props: Props) => {
       </Flex>
       <Flex gridArea={'response'}>
         <div style={{ width: '100%' }} ref={ref}>
-          <Flex columnGap={'size-100'}>
+          <Flex columnGap={'size-100'} alignItems={'center'}>
             <motion.div
               initial={{ scaleX: 0, transformOrigin: 'center left' }}
               animate={{ scaleX: isLoading ? 0 : 1 }}

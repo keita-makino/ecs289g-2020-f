@@ -2,3 +2,4 @@ prisma/data
 node_modules
 dist
 .vscode
+.env

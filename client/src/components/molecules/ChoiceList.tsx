@@ -8,6 +8,7 @@ import { ChoiceListItem } from '../atoms/ChoiceListItem';
 import { TH } from '../atoms/TH';
 import { ScrollableList } from '../utils/ScrollableList';
 import { TwoColumnCard } from '../utils/TwoColumnCard';
+import { getItemDetails } from './AnswerList';
 
 type PropsBase = { elements: Element[] };
 export const defaultValue = { elements: [] };
@@ -22,6 +23,18 @@ export type ChoiceListProps = Props;
 export const ChoiceList: React.FC<PropsBase> = (_props: PropsBase) => {
   const props = (defaultValue && _props) as Props;
   const sortBy = useReactiveVar(sortByVar);
+
+  const uniqueArray =
+    props.elements.length > 0
+      ? props.elements
+          .map((item) => item.choice)
+          .filter(
+            (item, index, array) =>
+              array
+                .map((item) => getItemDetails(item))
+                .indexOf(getItemDetails(item)) === index
+          )
+      : [];
 
   return (
     <TwoColumnCard title={'Choices'}>
@@ -47,19 +60,23 @@ export const ChoiceList: React.FC<PropsBase> = (_props: PropsBase) => {
           <Divider size={'S'} gridArea={'divider'} />
         </Grid>
         <ScrollableList height={'25rem'}>
-          {props.elements.length > 0 ? (
-            props.elements
+          {uniqueArray.length > 0 ? (
+            uniqueArray
               .sort((a, b) => {
                 if (sortBy['choice']['by']) {
                   const by = sortBy['choice'].by;
                   const asc = sortBy['choice'].asc;
-                  return asc
-                    ? a[by] < b[by]
+                  if (by === 'value' || by === 'label') {
+                    return asc
+                      ? a[by] < b[by]
+                        ? -1
+                        : 1
+                      : a[by] > b[by]
                       ? -1
-                      : 1
-                    : a[by] > b[by]
-                    ? -1
-                    : 1;
+                      : 1;
+                  } else {
+                    return 1;
+                  }
                 } else {
                   return 1;
                 }

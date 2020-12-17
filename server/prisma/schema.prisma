@@ -27,20 +27,29 @@ model Record {
 }
 
 model Element {
-  id            String    @id @default(uuid())
-  value         Int
-  label         String?
-  details       Json?
-  records       Record[]  @relation(references: [id])
-  question      Question? @relation(fields: [questionId], references: [id])
-  issue         Issue?    @relation(fields: [issueId], references: [id])
-  isChoice      Boolean   @default(false)
-  isAnswer      Boolean   @default(false)
-  isTextAllowed Boolean   @default(false)
-  questionId    String?
-  issueId       String?
-  time          DateTime  @default(now())
-  embedding     Float[]
+  id         String    @id @default(uuid())
+  records    Record[]  @relation(references: [id])
+  question   Question? @relation(fields: [questionId], references: [id])
+  issue      Issue?    @relation(fields: [issueId], references: [id])
+  choice     Choice?   @relation("choice")
+  answer     Choice?   @relation("answer")
+  time       DateTime  @default(now())
+  questionId String?
+  issueId    String?
+  choiceId   String?
+}
+
+model Choice {
+  id                    String   @id @default(uuid())
+  value                 Int
+  label                 String
+  isTextAllowed         Boolean  @default(false)
+  details               String?
+  embedding             Float[]
+  toElementFromChoice   Element? @relation("choice", fields: [toElementFromChoiceId], references: [id])
+  toElementFromAnswer   Element? @relation("answer", fields: [toElementFromAnswerId], references: [id])
+  toElementFromChoiceId String?
+  toElementFromAnswerId String?
 }
 
 model Survey {

@@ -68,7 +68,6 @@ export const QuestionList: React.FC<PropsBase> = (_props: PropsBase) => {
 
   useEffect(() => {
     if (!isEditing['questionTitle']) {
-      console.log();
       refetch();
     }
   }, [isEditing, refetch]);

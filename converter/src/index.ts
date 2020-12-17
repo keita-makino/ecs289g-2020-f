@@ -29,8 +29,8 @@ export const main = async () => {
     )
   );
 
-  exportDefaultElementsAsCsv(_elements, questionsFlatten);
-  exportQuestionsAsCsv(questionsFlatten);
+  // exportDefaultElementsAsCsv(_elements, questionsFlatten);
+  // exportQuestionsAsCsv(questionsFlatten);
 
   const responses = getResponses();
   if ((await responses).length === 2) {

@@ -26,6 +26,138 @@ export interface NexusGenInputs {
     equals?: boolean | null; // Boolean
     not?: NexusGenInputs['NestedBoolFilter'] | null; // NestedBoolFilter
   }
+  ChoiceCreateInput: { // input type
+    details?: string | null; // String
+    embedding?: NexusGenInputs['ChoiceCreateembeddingInput'] | null; // ChoiceCreateembeddingInput
+    id?: string | null; // String
+    isTextAllowed?: boolean | null; // Boolean
+    label: string; // String!
+    toElementFromAnswer?: NexusGenInputs['ElementCreateOneWithoutAnswerInput'] | null; // ElementCreateOneWithoutAnswerInput
+    toElementFromChoice?: NexusGenInputs['ElementCreateOneWithoutChoiceInput'] | null; // ElementCreateOneWithoutChoiceInput
+    value: number; // Int!
+  }
+  ChoiceCreateOneWithoutToElementFromAnswerInput: { // input type
+    connect?: NexusGenInputs['ChoiceWhereUniqueInput'] | null; // ChoiceWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ChoiceCreateOrConnectWithouttoElementFromAnswerInput'] | null; // ChoiceCreateOrConnectWithouttoElementFromAnswerInput
+    create?: NexusGenInputs['ChoiceCreateWithoutToElementFromAnswerInput'] | null; // ChoiceCreateWithoutToElementFromAnswerInput
+  }
+  ChoiceCreateOneWithoutToElementFromChoiceInput: { // input type
+    connect?: NexusGenInputs['ChoiceWhereUniqueInput'] | null; // ChoiceWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ChoiceCreateOrConnectWithouttoElementFromChoiceInput'] | null; // ChoiceCreateOrConnectWithouttoElementFromChoiceInput
+    create?: NexusGenInputs['ChoiceCreateWithoutToElementFromChoiceInput'] | null; // ChoiceCreateWithoutToElementFromChoiceInput
+  }
+  ChoiceCreateOrConnectWithouttoElementFromAnswerInput: { // input type
+    create: NexusGenInputs['ChoiceCreateWithoutToElementFromAnswerInput']; // ChoiceCreateWithoutToElementFromAnswerInput!
+    where: NexusGenInputs['ChoiceWhereUniqueInput']; // ChoiceWhereUniqueInput!
+  }
+  ChoiceCreateOrConnectWithouttoElementFromChoiceInput: { // input type
+    create: NexusGenInputs['ChoiceCreateWithoutToElementFromChoiceInput']; // ChoiceCreateWithoutToElementFromChoiceInput!
+    where: NexusGenInputs['ChoiceWhereUniqueInput']; // ChoiceWhereUniqueInput!
+  }
+  ChoiceCreateWithoutToElementFromAnswerInput: { // input type
+    details?: string | null; // String
+    embedding?: NexusGenInputs['ChoiceCreateembeddingInput'] | null; // ChoiceCreateembeddingInput
+    id?: string | null; // String
+    isTextAllowed?: boolean | null; // Boolean
+    label: string; // String!
+    toElementFromChoice?: NexusGenInputs['ElementCreateOneWithoutChoiceInput'] | null; // ElementCreateOneWithoutChoiceInput
+    value: number; // Int!
+  }
+  ChoiceCreateWithoutToElementFromChoiceInput: { // input type
+    details?: string | null; // String
+    embedding?: NexusGenInputs['ChoiceCreateembeddingInput'] | null; // ChoiceCreateembeddingInput
+    id?: string | null; // String
+    isTextAllowed?: boolean | null; // Boolean
+    label: string; // String!
+    toElementFromAnswer?: NexusGenInputs['ElementCreateOneWithoutAnswerInput'] | null; // ElementCreateOneWithoutAnswerInput
+    value: number; // Int!
+  }
+  ChoiceCreateembeddingInput: { // input type
+    set?: number[] | null; // [Float!]
+  }
+  ChoiceUpdateInput: { // input type
+    details?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
+    embedding?: NexusGenInputs['ChoiceUpdateembeddingInput'] | null; // ChoiceUpdateembeddingInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    isTextAllowed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    label?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    toElementFromAnswer?: NexusGenInputs['ElementUpdateOneWithoutAnswerInput'] | null; // ElementUpdateOneWithoutAnswerInput
+    toElementFromChoice?: NexusGenInputs['ElementUpdateOneWithoutChoiceInput'] | null; // ElementUpdateOneWithoutChoiceInput
+    value?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+  }
+  ChoiceUpdateManyMutationInput: { // input type
+    details?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
+    embedding?: NexusGenInputs['ChoiceUpdateembeddingInput'] | null; // ChoiceUpdateembeddingInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    isTextAllowed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    label?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    value?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+  }
+  ChoiceUpdateOneWithoutToElementFromAnswerInput: { // input type
+    connect?: NexusGenInputs['ChoiceWhereUniqueInput'] | null; // ChoiceWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ChoiceCreateOrConnectWithouttoElementFromAnswerInput'] | null; // ChoiceCreateOrConnectWithouttoElementFromAnswerInput
+    create?: NexusGenInputs['ChoiceCreateWithoutToElementFromAnswerInput'] | null; // ChoiceCreateWithoutToElementFromAnswerInput
+    delete?: boolean | null; // Boolean
+    disconnect?: boolean | null; // Boolean
+    update?: NexusGenInputs['ChoiceUpdateWithoutToElementFromAnswerInput'] | null; // ChoiceUpdateWithoutToElementFromAnswerInput
+    upsert?: NexusGenInputs['ChoiceUpsertWithoutToElementFromAnswerInput'] | null; // ChoiceUpsertWithoutToElementFromAnswerInput
+  }
+  ChoiceUpdateOneWithoutToElementFromChoiceInput: { // input type
+    connect?: NexusGenInputs['ChoiceWhereUniqueInput'] | null; // ChoiceWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ChoiceCreateOrConnectWithouttoElementFromChoiceInput'] | null; // ChoiceCreateOrConnectWithouttoElementFromChoiceInput
+    create?: NexusGenInputs['ChoiceCreateWithoutToElementFromChoiceInput'] | null; // ChoiceCreateWithoutToElementFromChoiceInput
+    delete?: boolean | null; // Boolean
+    disconnect?: boolean | null; // Boolean
+    update?: NexusGenInputs['ChoiceUpdateWithoutToElementFromChoiceInput'] | null; // ChoiceUpdateWithoutToElementFromChoiceInput
+    upsert?: NexusGenInputs['ChoiceUpsertWithoutToElementFromChoiceInput'] | null; // ChoiceUpsertWithoutToElementFromChoiceInput
+  }
+  ChoiceUpdateWithoutToElementFromAnswerInput: { // input type
+    details?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
+    embedding?: NexusGenInputs['ChoiceUpdateembeddingInput'] | null; // ChoiceUpdateembeddingInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    isTextAllowed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    label?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    toElementFromChoice?: NexusGenInputs['ElementUpdateOneWithoutChoiceInput'] | null; // ElementUpdateOneWithoutChoiceInput
+    value?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+  }
+  ChoiceUpdateWithoutToElementFromChoiceInput: { // input type
+    details?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
+    embedding?: NexusGenInputs['ChoiceUpdateembeddingInput'] | null; // ChoiceUpdateembeddingInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    isTextAllowed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
+    label?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    toElementFromAnswer?: NexusGenInputs['ElementUpdateOneWithoutAnswerInput'] | null; // ElementUpdateOneWithoutAnswerInput
+    value?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+  }
+  ChoiceUpdateembeddingInput: { // input type
+    set?: number[] | null; // [Float!]
+  }
+  ChoiceUpsertWithoutToElementFromAnswerInput: { // input type
+    create: NexusGenInputs['ChoiceCreateWithoutToElementFromAnswerInput']; // ChoiceCreateWithoutToElementFromAnswerInput!
+    update: NexusGenInputs['ChoiceUpdateWithoutToElementFromAnswerInput']; // ChoiceUpdateWithoutToElementFromAnswerInput!
+  }
+  ChoiceUpsertWithoutToElementFromChoiceInput: { // input type
+    create: NexusGenInputs['ChoiceCreateWithoutToElementFromChoiceInput']; // ChoiceCreateWithoutToElementFromChoiceInput!
+    update: NexusGenInputs['ChoiceUpdateWithoutToElementFromChoiceInput']; // ChoiceUpdateWithoutToElementFromChoiceInput!
+  }
+  ChoiceWhereInput: { // input type
+    AND?: NexusGenInputs['ChoiceWhereInput'][] | null; // [ChoiceWhereInput!]
+    details?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
+    embedding?: NexusGenInputs['FloatNullableListFilter'] | null; // FloatNullableListFilter
+    id?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    isTextAllowed?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
+    label?: NexusGenInputs['StringFilter'] | null; // StringFilter
+    NOT?: NexusGenInputs['ChoiceWhereInput'][] | null; // [ChoiceWhereInput!]
+    OR?: NexusGenInputs['ChoiceWhereInput'][] | null; // [ChoiceWhereInput!]
+    toElementFromAnswer?: NexusGenInputs['ElementWhereInput'] | null; // ElementWhereInput
+    toElementFromAnswerId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
+    toElementFromChoice?: NexusGenInputs['ElementWhereInput'] | null; // ElementWhereInput
+    toElementFromChoiceId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
+    value?: NexusGenInputs['IntFilter'] | null; // IntFilter
+  }
+  ChoiceWhereUniqueInput: { // input type
+    id?: string | null; // String
+  }
   DateTimeFieldUpdateOperationsInput: { // input type
     set?: NexusGenScalars['DateTime'] | null; // DateTime
   }
@@ -40,18 +172,14 @@ export interface NexusGenInputs {
     notIn?: NexusGenScalars['DateTime'][] | null; // [DateTime!]
   }
   ElementCreateInput: { // input type
-    details?: NexusGenScalars['Json'] | null; // Json
-    embedding?: NexusGenInputs['ElementCreateembeddingInput'] | null; // ElementCreateembeddingInput
+    answer?: NexusGenInputs['ChoiceCreateOneWithoutToElementFromAnswerInput'] | null; // ChoiceCreateOneWithoutToElementFromAnswerInput
+    choice?: NexusGenInputs['ChoiceCreateOneWithoutToElementFromChoiceInput'] | null; // ChoiceCreateOneWithoutToElementFromChoiceInput
+    choiceId?: string | null; // String
     id?: string | null; // String
-    isAnswer?: boolean | null; // Boolean
-    isChoice?: boolean | null; // Boolean
     issue?: NexusGenInputs['IssueCreateOneWithoutElementsInput'] | null; // IssueCreateOneWithoutElementsInput
-    isTextAllowed?: boolean | null; // Boolean
-    label?: string | null; // String
     question?: NexusGenInputs['QuestionCreateOneWithoutElementsInput'] | null; // QuestionCreateOneWithoutElementsInput
     records?: NexusGenInputs['RecordCreateManyWithoutElementsInput'] | null; // RecordCreateManyWithoutElementsInput
     time?: NexusGenScalars['DateTime'] | null; // DateTime
-    value: number; // Int!
   }
   ElementCreateManyWithoutQuestionInput: { // input type
     connect?: NexusGenInputs['ElementWhereUniqueInput'][] | null; // [ElementWhereUniqueInput!]
@@ -63,6 +191,24 @@ export interface NexusGenInputs {
     connectOrCreate?: NexusGenInputs['ElementCreateOrConnectWithoutrecordsInput'][] | null; // [ElementCreateOrConnectWithoutrecordsInput!]
     create?: NexusGenInputs['ElementCreateWithoutRecordsInput'][] | null; // [ElementCreateWithoutRecordsInput!]
   }
+  ElementCreateOneWithoutAnswerInput: { // input type
+    connect?: NexusGenInputs['ElementWhereUniqueInput'] | null; // ElementWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ElementCreateOrConnectWithoutanswerInput'] | null; // ElementCreateOrConnectWithoutanswerInput
+    create?: NexusGenInputs['ElementCreateWithoutAnswerInput'] | null; // ElementCreateWithoutAnswerInput
+  }
+  ElementCreateOneWithoutChoiceInput: { // input type
+    connect?: NexusGenInputs['ElementWhereUniqueInput'] | null; // ElementWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ElementCreateOrConnectWithoutchoiceInput'] | null; // ElementCreateOrConnectWithoutchoiceInput
+    create?: NexusGenInputs['ElementCreateWithoutChoiceInput'] | null; // ElementCreateWithoutChoiceInput
+  }
+  ElementCreateOrConnectWithoutanswerInput: { // input type
+    create: NexusGenInputs['ElementCreateWithoutAnswerInput']; // ElementCreateWithoutAnswerInput!
+    where: NexusGenInputs['ElementWhereUniqueInput']; // ElementWhereUniqueInput!
+  }
+  ElementCreateOrConnectWithoutchoiceInput: { // input type
+    create: NexusGenInputs['ElementCreateWithoutChoiceInput']; // ElementCreateWithoutChoiceInput!
+    where: NexusGenInputs['ElementWhereUniqueInput']; // ElementWhereUniqueInput!
+  }
   ElementCreateOrConnectWithoutquestionInput: { // input type
     create: NexusGenInputs['ElementCreateWithoutQuestionInput']; // ElementCreateWithoutQuestionInput!
     where: NexusGenInputs['ElementWhereUniqueInput']; // ElementWhereUniqueInput!
@@ -71,34 +217,41 @@ export interface NexusGenInputs {
     create: NexusGenInputs['ElementCreateWithoutRecordsInput']; // ElementCreateWithoutRecordsInput!
     where: NexusGenInputs['ElementWhereUniqueInput']; // ElementWhereUniqueInput!
   }
-  ElementCreateWithoutQuestionInput: { // input type
-    details?: NexusGenScalars['Json'] | null; // Json
-    embedding?: NexusGenInputs['ElementCreateembeddingInput'] | null; // ElementCreateembeddingInput
+  ElementCreateWithoutAnswerInput: { // input type
+    choice?: NexusGenInputs['ChoiceCreateOneWithoutToElementFromChoiceInput'] | null; // ChoiceCreateOneWithoutToElementFromChoiceInput
+    choiceId?: string | null; // String
     id?: string | null; // String
-    isAnswer?: boolean | null; // Boolean
-    isChoice?: boolean | null; // Boolean
     issue?: NexusGenInputs['IssueCreateOneWithoutElementsInput'] | null; // IssueCreateOneWithoutElementsInput
-    isTextAllowed?: boolean | null; // Boolean
-    label?: string | null; // String
+    question?: NexusGenInputs['QuestionCreateOneWithoutElementsInput'] | null; // QuestionCreateOneWithoutElementsInput
     records?: NexusGenInputs['RecordCreateManyWithoutElementsInput'] | null; // RecordCreateManyWithoutElementsInput
     time?: NexusGenScalars['DateTime'] | null; // DateTime
-    value: number; // Int!
+  }
+  ElementCreateWithoutChoiceInput: { // input type
+    answer?: NexusGenInputs['ChoiceCreateOneWithoutToElementFromAnswerInput'] | null; // ChoiceCreateOneWithoutToElementFromAnswerInput
+    choiceId?: string | null; // String
+    id?: string | null; // String
+    issue?: NexusGenInputs['IssueCreateOneWithoutElementsInput'] | null; // IssueCreateOneWithoutElementsInput
+    question?: NexusGenInputs['QuestionCreateOneWithoutElementsInput'] | null; // QuestionCreateOneWithoutElementsInput
+    records?: NexusGenInputs['RecordCreateManyWithoutElementsInput'] | null; // RecordCreateManyWithoutElementsInput
+    time?: NexusGenScalars['DateTime'] | null; // DateTime
+  }
+  ElementCreateWithoutQuestionInput: { // input type
+    answer?: NexusGenInputs['ChoiceCreateOneWithoutToElementFromAnswerInput'] | null; // ChoiceCreateOneWithoutToElementFromAnswerInput
+    choice?: NexusGenInputs['ChoiceCreateOneWithoutToElementFromChoiceInput'] | null; // ChoiceCreateOneWithoutToElementFromChoiceInput
+    choiceId?: string | null; // String
+    id?: string | null; // String
+    issue?: NexusGenInputs['IssueCreateOneWithoutElementsInput'] | null; // IssueCreateOneWithoutElementsInput
+    records?: NexusGenInputs['RecordCreateManyWithoutElementsInput'] | null; // RecordCreateManyWithoutElementsInput
+    time?: NexusGenScalars['DateTime'] | null; // DateTime
   }
   ElementCreateWithoutRecordsInput: { // input type
-    details?: NexusGenScalars['Json'] | null; // Json
-    embedding?: NexusGenInputs['ElementCreateembeddingInput'] | null; // ElementCreateembeddingInput
+    answer?: NexusGenInputs['ChoiceCreateOneWithoutToElementFromAnswerInput'] | null; // ChoiceCreateOneWithoutToElementFromAnswerInput
+    choice?: NexusGenInputs['ChoiceCreateOneWithoutToElementFromChoiceInput'] | null; // ChoiceCreateOneWithoutToElementFromChoiceInput
+    choiceId?: string | null; // String
     id?: string | null; // String
-    isAnswer?: boolean | null; // Boolean
-    isChoice?: boolean | null; // Boolean
     issue?: NexusGenInputs['IssueCreateOneWithoutElementsInput'] | null; // IssueCreateOneWithoutElementsInput
-    isTextAllowed?: boolean | null; // Boolean
-    label?: string | null; // String
     question?: NexusGenInputs['QuestionCreateOneWithoutElementsInput'] | null; // QuestionCreateOneWithoutElementsInput
     time?: NexusGenScalars['DateTime'] | null; // DateTime
-    value: number; // Int!
-  }
-  ElementCreateembeddingInput: { // input type
-    set?: number[] | null; // [Float!]
   }
   ElementListRelationFilter: { // input type
     every?: NexusGenInputs['ElementWhereInput'] | null; // ElementWhereInput
@@ -107,44 +260,28 @@ export interface NexusGenInputs {
   }
   ElementScalarWhereInput: { // input type
     AND?: NexusGenInputs['ElementScalarWhereInput'][] | null; // [ElementScalarWhereInput!]
-    details?: NexusGenInputs['JsonNullableFilter'] | null; // JsonNullableFilter
-    embedding?: NexusGenInputs['FloatNullableListFilter'] | null; // FloatNullableListFilter
+    choiceId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    isAnswer?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
-    isChoice?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
     issueId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
-    isTextAllowed?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
-    label?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     NOT?: NexusGenInputs['ElementScalarWhereInput'][] | null; // [ElementScalarWhereInput!]
     OR?: NexusGenInputs['ElementScalarWhereInput'][] | null; // [ElementScalarWhereInput!]
     questionId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     time?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
-    value?: NexusGenInputs['IntFilter'] | null; // IntFilter
   }
   ElementUpdateInput: { // input type
-    details?: NexusGenScalars['Json'] | null; // Json
-    embedding?: NexusGenInputs['ElementUpdateembeddingInput'] | null; // ElementUpdateembeddingInput
+    answer?: NexusGenInputs['ChoiceUpdateOneWithoutToElementFromAnswerInput'] | null; // ChoiceUpdateOneWithoutToElementFromAnswerInput
+    choice?: NexusGenInputs['ChoiceUpdateOneWithoutToElementFromChoiceInput'] | null; // ChoiceUpdateOneWithoutToElementFromChoiceInput
+    choiceId?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    isAnswer?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    isChoice?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
     issue?: NexusGenInputs['IssueUpdateOneWithoutElementsInput'] | null; // IssueUpdateOneWithoutElementsInput
-    isTextAllowed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    label?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
     question?: NexusGenInputs['QuestionUpdateOneWithoutElementsInput'] | null; // QuestionUpdateOneWithoutElementsInput
     records?: NexusGenInputs['RecordUpdateManyWithoutElementsInput'] | null; // RecordUpdateManyWithoutElementsInput
     time?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    value?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
   }
   ElementUpdateManyMutationInput: { // input type
-    details?: NexusGenScalars['Json'] | null; // Json
-    embedding?: NexusGenInputs['ElementUpdateembeddingInput'] | null; // ElementUpdateembeddingInput
+    choiceId?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    isAnswer?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    isChoice?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    isTextAllowed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    label?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
     time?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    value?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
   }
   ElementUpdateManyWithWhereWithoutQuestionInput: { // input type
     data: NexusGenInputs['ElementUpdateManyMutationInput']; // ElementUpdateManyMutationInput!
@@ -178,6 +315,24 @@ export interface NexusGenInputs {
     updateMany?: NexusGenInputs['ElementUpdateManyWithWhereWithoutRecordsInput'][] | null; // [ElementUpdateManyWithWhereWithoutRecordsInput!]
     upsert?: NexusGenInputs['ElementUpsertWithWhereUniqueWithoutRecordsInput'][] | null; // [ElementUpsertWithWhereUniqueWithoutRecordsInput!]
   }
+  ElementUpdateOneWithoutAnswerInput: { // input type
+    connect?: NexusGenInputs['ElementWhereUniqueInput'] | null; // ElementWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ElementCreateOrConnectWithoutanswerInput'] | null; // ElementCreateOrConnectWithoutanswerInput
+    create?: NexusGenInputs['ElementCreateWithoutAnswerInput'] | null; // ElementCreateWithoutAnswerInput
+    delete?: boolean | null; // Boolean
+    disconnect?: boolean | null; // Boolean
+    update?: NexusGenInputs['ElementUpdateWithoutAnswerInput'] | null; // ElementUpdateWithoutAnswerInput
+    upsert?: NexusGenInputs['ElementUpsertWithoutAnswerInput'] | null; // ElementUpsertWithoutAnswerInput
+  }
+  ElementUpdateOneWithoutChoiceInput: { // input type
+    connect?: NexusGenInputs['ElementWhereUniqueInput'] | null; // ElementWhereUniqueInput
+    connectOrCreate?: NexusGenInputs['ElementCreateOrConnectWithoutchoiceInput'] | null; // ElementCreateOrConnectWithoutchoiceInput
+    create?: NexusGenInputs['ElementCreateWithoutChoiceInput'] | null; // ElementCreateWithoutChoiceInput
+    delete?: boolean | null; // Boolean
+    disconnect?: boolean | null; // Boolean
+    update?: NexusGenInputs['ElementUpdateWithoutChoiceInput'] | null; // ElementUpdateWithoutChoiceInput
+    upsert?: NexusGenInputs['ElementUpsertWithoutChoiceInput'] | null; // ElementUpsertWithoutChoiceInput
+  }
   ElementUpdateWithWhereUniqueWithoutQuestionInput: { // input type
     data: NexusGenInputs['ElementUpdateWithoutQuestionInput']; // ElementUpdateWithoutQuestionInput!
     where: NexusGenInputs['ElementWhereUniqueInput']; // ElementWhereUniqueInput!
@@ -186,34 +341,41 @@ export interface NexusGenInputs {
     data: NexusGenInputs['ElementUpdateWithoutRecordsInput']; // ElementUpdateWithoutRecordsInput!
     where: NexusGenInputs['ElementWhereUniqueInput']; // ElementWhereUniqueInput!
   }
-  ElementUpdateWithoutQuestionInput: { // input type
-    details?: NexusGenScalars['Json'] | null; // Json
-    embedding?: NexusGenInputs['ElementUpdateembeddingInput'] | null; // ElementUpdateembeddingInput
+  ElementUpdateWithoutAnswerInput: { // input type
+    choice?: NexusGenInputs['ChoiceUpdateOneWithoutToElementFromChoiceInput'] | null; // ChoiceUpdateOneWithoutToElementFromChoiceInput
+    choiceId?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    isAnswer?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    isChoice?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
     issue?: NexusGenInputs['IssueUpdateOneWithoutElementsInput'] | null; // IssueUpdateOneWithoutElementsInput
-    isTextAllowed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    label?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
+    question?: NexusGenInputs['QuestionUpdateOneWithoutElementsInput'] | null; // QuestionUpdateOneWithoutElementsInput
     records?: NexusGenInputs['RecordUpdateManyWithoutElementsInput'] | null; // RecordUpdateManyWithoutElementsInput
     time?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    value?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
+  }
+  ElementUpdateWithoutChoiceInput: { // input type
+    answer?: NexusGenInputs['ChoiceUpdateOneWithoutToElementFromAnswerInput'] | null; // ChoiceUpdateOneWithoutToElementFromAnswerInput
+    choiceId?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    issue?: NexusGenInputs['IssueUpdateOneWithoutElementsInput'] | null; // IssueUpdateOneWithoutElementsInput
+    question?: NexusGenInputs['QuestionUpdateOneWithoutElementsInput'] | null; // QuestionUpdateOneWithoutElementsInput
+    records?: NexusGenInputs['RecordUpdateManyWithoutElementsInput'] | null; // RecordUpdateManyWithoutElementsInput
+    time?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
+  }
+  ElementUpdateWithoutQuestionInput: { // input type
+    answer?: NexusGenInputs['ChoiceUpdateOneWithoutToElementFromAnswerInput'] | null; // ChoiceUpdateOneWithoutToElementFromAnswerInput
+    choice?: NexusGenInputs['ChoiceUpdateOneWithoutToElementFromChoiceInput'] | null; // ChoiceUpdateOneWithoutToElementFromChoiceInput
+    choiceId?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
+    id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
+    issue?: NexusGenInputs['IssueUpdateOneWithoutElementsInput'] | null; // IssueUpdateOneWithoutElementsInput
+    records?: NexusGenInputs['RecordUpdateManyWithoutElementsInput'] | null; // RecordUpdateManyWithoutElementsInput
+    time?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
   }
   ElementUpdateWithoutRecordsInput: { // input type
-    details?: NexusGenScalars['Json'] | null; // Json
-    embedding?: NexusGenInputs['ElementUpdateembeddingInput'] | null; // ElementUpdateembeddingInput
+    answer?: NexusGenInputs['ChoiceUpdateOneWithoutToElementFromAnswerInput'] | null; // ChoiceUpdateOneWithoutToElementFromAnswerInput
+    choice?: NexusGenInputs['ChoiceUpdateOneWithoutToElementFromChoiceInput'] | null; // ChoiceUpdateOneWithoutToElementFromChoiceInput
+    choiceId?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
     id?: NexusGenInputs['StringFieldUpdateOperationsInput'] | null; // StringFieldUpdateOperationsInput
-    isAnswer?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    isChoice?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
     issue?: NexusGenInputs['IssueUpdateOneWithoutElementsInput'] | null; // IssueUpdateOneWithoutElementsInput
-    isTextAllowed?: NexusGenInputs['BoolFieldUpdateOperationsInput'] | null; // BoolFieldUpdateOperationsInput
-    label?: NexusGenInputs['NullableStringFieldUpdateOperationsInput'] | null; // NullableStringFieldUpdateOperationsInput
     question?: NexusGenInputs['QuestionUpdateOneWithoutElementsInput'] | null; // QuestionUpdateOneWithoutElementsInput
     time?: NexusGenInputs['DateTimeFieldUpdateOperationsInput'] | null; // DateTimeFieldUpdateOperationsInput
-    value?: NexusGenInputs['IntFieldUpdateOperationsInput'] | null; // IntFieldUpdateOperationsInput
-  }
-  ElementUpdateembeddingInput: { // input type
-    set?: number[] | null; // [Float!]
   }
   ElementUpsertWithWhereUniqueWithoutQuestionInput: { // input type
     create: NexusGenInputs['ElementCreateWithoutQuestionInput']; // ElementCreateWithoutQuestionInput!
@@ -225,24 +387,28 @@ export interface NexusGenInputs {
     update: NexusGenInputs['ElementUpdateWithoutRecordsInput']; // ElementUpdateWithoutRecordsInput!
     where: NexusGenInputs['ElementWhereUniqueInput']; // ElementWhereUniqueInput!
   }
+  ElementUpsertWithoutAnswerInput: { // input type
+    create: NexusGenInputs['ElementCreateWithoutAnswerInput']; // ElementCreateWithoutAnswerInput!
+    update: NexusGenInputs['ElementUpdateWithoutAnswerInput']; // ElementUpdateWithoutAnswerInput!
+  }
+  ElementUpsertWithoutChoiceInput: { // input type
+    create: NexusGenInputs['ElementCreateWithoutChoiceInput']; // ElementCreateWithoutChoiceInput!
+    update: NexusGenInputs['ElementUpdateWithoutChoiceInput']; // ElementUpdateWithoutChoiceInput!
+  }
   ElementWhereInput: { // input type
     AND?: NexusGenInputs['ElementWhereInput'][] | null; // [ElementWhereInput!]
-    details?: NexusGenInputs['JsonNullableFilter'] | null; // JsonNullableFilter
-    embedding?: NexusGenInputs['FloatNullableListFilter'] | null; // FloatNullableListFilter
+    answer?: NexusGenInputs['ChoiceWhereInput'] | null; // ChoiceWhereInput
+    choice?: NexusGenInputs['ChoiceWhereInput'] | null; // ChoiceWhereInput
+    choiceId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     id?: NexusGenInputs['StringFilter'] | null; // StringFilter
-    isAnswer?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
-    isChoice?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
     issue?: NexusGenInputs['IssueWhereInput'] | null; // IssueWhereInput
     issueId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
-    isTextAllowed?: NexusGenInputs['BoolFilter'] | null; // BoolFilter
-    label?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     NOT?: NexusGenInputs['ElementWhereInput'][] | null; // [ElementWhereInput!]
     OR?: NexusGenInputs['ElementWhereInput'][] | null; // [ElementWhereInput!]
     question?: NexusGenInputs['QuestionWhereInput'] | null; // QuestionWhereInput
     questionId?: NexusGenInputs['StringNullableFilter'] | null; // StringNullableFilter
     records?: NexusGenInputs['RecordListRelationFilter'] | null; // RecordListRelationFilter
     time?: NexusGenInputs['DateTimeFilter'] | null; // DateTimeFilter
-    value?: NexusGenInputs['IntFilter'] | null; // IntFilter
   }
   ElementWhereUniqueInput: { // input type
     id?: string | null; // String
@@ -322,10 +488,6 @@ export interface NexusGenInputs {
   }
   IssueWhereUniqueInput: { // input type
     id?: string | null; // String
-  }
-  JsonNullableFilter: { // input type
-    equals?: NexusGenScalars['Json'] | null; // Json
-    not?: NexusGenScalars['Json'] | null; // Json
   }
   NestedBoolFilter: { // input type
     equals?: boolean | null; // Boolean
@@ -1214,19 +1376,22 @@ export interface NexusGenObjects {
   BatchPayload: { // root type
     count: number; // Int!
   }
+  Choice: { // root type
+    details?: string | null; // String
+    embedding: number[]; // [Float!]!
+    id: string; // String!
+    isTextAllowed: boolean; // Boolean!
+    label: string; // String!
+    value: number; // Int!
+  }
   CrossTabRecordInfo: { // root type
     primaryId?: string | null; // String
     records?: Array<NexusGenRootTypes['Record'] | null> | null; // [Record]
     secondaryId?: string | null; // String
   }
   Element: { // root type
-    details?: NexusGenScalars['Json'] | null; // Json
     id: string; // String!
-    isAnswer: boolean; // Boolean!
-    isChoice: boolean; // Boolean!
-    label?: string | null; // String
     time: NexusGenScalars['DateTime']; // DateTime!
-    value: number; // Int!
   }
   Mutation: {};
   Query: {};
@@ -1271,23 +1436,30 @@ export interface NexusGenFieldTypes {
   BatchPayload: { // field return type
     count: number; // Int!
   }
+  Choice: { // field return type
+    details: string | null; // String
+    embedding: number[]; // [Float!]!
+    id: string; // String!
+    isTextAllowed: boolean; // Boolean!
+    label: string; // String!
+    value: number; // Int!
+  }
   CrossTabRecordInfo: { // field return type
     primaryId: string | null; // String
     records: Array<NexusGenRootTypes['Record'] | null> | null; // [Record]
     secondaryId: string | null; // String
   }
   Element: { // field return type
-    details: NexusGenScalars['Json'] | null; // Json
+    answer: NexusGenRootTypes['Choice'] | null; // Choice
+    choice: NexusGenRootTypes['Choice'] | null; // Choice
     id: string; // String!
-    isAnswer: boolean; // Boolean!
-    isChoice: boolean; // Boolean!
-    label: string | null; // String
+    primaryEmbedding: Array<number | null> | null; // [Float]
     question: NexusGenRootTypes['Question'] | null; // Question
     records: NexusGenRootTypes['Record'][]; // [Record!]!
     time: NexusGenScalars['DateTime']; // DateTime!
-    value: number; // Int!
   }
   Mutation: { // field return type
+    createOneChoice: NexusGenRootTypes['Choice']; // Choice!
     createOneElement: NexusGenRootTypes['Element']; // Element!
     createOneQuestion: NexusGenRootTypes['Question']; // Question!
     createOneRecord: NexusGenRootTypes['Record']; // Record!
@@ -1305,12 +1477,14 @@ export interface NexusGenFieldTypes {
     deleteOneRecord: NexusGenRootTypes['Record'] | null; // Record
     deleteOneSection: NexusGenRootTypes['Section'] | null; // Section
     deleteOneSurvey: NexusGenRootTypes['Survey'] | null; // Survey
+    updateManyChoice: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManyElement: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManyQuestion: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManyRecord: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManySection: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManySurvey: NexusGenRootTypes['BatchPayload']; // BatchPayload!
     updateManyUser: NexusGenRootTypes['BatchPayload']; // BatchPayload!
+    updateOneChoice: NexusGenRootTypes['Choice'] | null; // Choice
     updateOneElement: NexusGenRootTypes['Element'] | null; // Element
     updateOneQuestion: NexusGenRootTypes['Question'] | null; // Question
     updateOneRecord: NexusGenRootTypes['Record'] | null; // Record
@@ -1319,6 +1493,8 @@ export interface NexusGenFieldTypes {
     updateOneUser: NexusGenRootTypes['User'] | null; // User
   }
   Query: { // field return type
+    choice: NexusGenRootTypes['Choice'] | null; // Choice
+    choices: NexusGenRootTypes['Choice'][]; // [Choice!]!
     crossTabRecordInfo: Array<NexusGenRootTypes['CrossTabRecordInfo'] | null> | null; // [CrossTabRecordInfo]
     element: NexusGenRootTypes['Element'] | null; // Element
     elements: NexusGenRootTypes['Element'][]; // [Element!]!
@@ -1368,23 +1544,30 @@ export interface NexusGenFieldTypeNames {
   BatchPayload: { // field return type name
     count: 'Int'
   }
+  Choice: { // field return type name
+    details: 'String'
+    embedding: 'Float'
+    id: 'String'
+    isTextAllowed: 'Boolean'
+    label: 'String'
+    value: 'Int'
+  }
   CrossTabRecordInfo: { // field return type name
     primaryId: 'String'
     records: 'Record'
     secondaryId: 'String'
   }
   Element: { // field return type name
-    details: 'Json'
+    answer: 'Choice'
+    choice: 'Choice'
     id: 'String'
-    isAnswer: 'Boolean'
-    isChoice: 'Boolean'
-    label: 'String'
+    primaryEmbedding: 'Float'
     question: 'Question'
     records: 'Record'
     time: 'DateTime'
-    value: 'Int'
   }
   Mutation: { // field return type name
+    createOneChoice: 'Choice'
     createOneElement: 'Element'
     createOneQuestion: 'Question'
     createOneRecord: 'Record'
@@ -1402,12 +1585,14 @@ export interface NexusGenFieldTypeNames {
     deleteOneRecord: 'Record'
     deleteOneSection: 'Section'
     deleteOneSurvey: 'Survey'
+    updateManyChoice: 'BatchPayload'
     updateManyElement: 'BatchPayload'
     updateManyQuestion: 'BatchPayload'
     updateManyRecord: 'BatchPayload'
     updateManySection: 'BatchPayload'
     updateManySurvey: 'BatchPayload'
     updateManyUser: 'BatchPayload'
+    updateOneChoice: 'Choice'
     updateOneElement: 'Element'
     updateOneQuestion: 'Question'
     updateOneRecord: 'Record'
@@ -1416,6 +1601,8 @@ export interface NexusGenFieldTypeNames {
     updateOneUser: 'User'
   }
   Query: { // field return type name
+    choice: 'Choice'
+    choices: 'Choice'
     crossTabRecordInfo: 'CrossTabRecordInfo'
     element: 'Element'
     elements: 'Element'
@@ -1463,6 +1650,9 @@ export interface NexusGenFieldTypeNames {
 
 export interface NexusGenArgTypes {
   Element: {
+    primaryEmbedding: { // args
+      isChoiceBased?: boolean | null; // Boolean
+    }
     records: { // args
       after?: NexusGenInputs['RecordWhereUniqueInput'] | null; // RecordWhereUniqueInput
       before?: NexusGenInputs['RecordWhereUniqueInput'] | null; // RecordWhereUniqueInput
@@ -1471,6 +1661,9 @@ export interface NexusGenArgTypes {
     }
   }
   Mutation: {
+    createOneChoice: { // args
+      data: NexusGenInputs['ChoiceCreateInput']; // ChoiceCreateInput!
+    }
     createOneElement: { // args
       data: NexusGenInputs['ElementCreateInput']; // ElementCreateInput!
     }
@@ -1522,6 +1715,10 @@ export interface NexusGenArgTypes {
     deleteOneSurvey: { // args
       where: NexusGenInputs['SurveyWhereUniqueInput']; // SurveyWhereUniqueInput!
     }
+    updateManyChoice: { // args
+      data: NexusGenInputs['ChoiceUpdateManyMutationInput']; // ChoiceUpdateManyMutationInput!
+      where?: NexusGenInputs['ChoiceWhereInput'] | null; // ChoiceWhereInput
+    }
     updateManyElement: { // args
       data: NexusGenInputs['ElementUpdateManyMutationInput']; // ElementUpdateManyMutationInput!
       where?: NexusGenInputs['ElementWhereInput'] | null; // ElementWhereInput
@@ -1545,6 +1742,10 @@ export interface NexusGenArgTypes {
     updateManyUser: { // args
       data: NexusGenInputs['UserUpdateManyMutationInput']; // UserUpdateManyMutationInput!
       where?: NexusGenInputs['UserWhereInput'] | null; // UserWhereInput
+    }
+    updateOneChoice: { // args
+      data: NexusGenInputs['ChoiceUpdateInput']; // ChoiceUpdateInput!
+      where: NexusGenInputs['ChoiceWhereUniqueInput']; // ChoiceWhereUniqueInput!
     }
     updateOneElement: { // args
       data: NexusGenInputs['ElementUpdateInput']; // ElementUpdateInput!
@@ -1572,6 +1773,15 @@ export interface NexusGenArgTypes {
     }
   }
   Query: {
+    choice: { // args
+      where: NexusGenInputs['ChoiceWhereUniqueInput']; // ChoiceWhereUniqueInput!
+    }
+    choices: { // args
+      after?: NexusGenInputs['ChoiceWhereUniqueInput'] | null; // ChoiceWhereUniqueInput
+      before?: NexusGenInputs['ChoiceWhereUniqueInput'] | null; // ChoiceWhereUniqueInput
+      first?: number | null; // Int
+      last?: number | null; // Int
+    }
     crossTabRecordInfo: { // args
       primaryElementIds: string[]; // [String!]!
       secondaryElementIds: string[]; // [String!]!

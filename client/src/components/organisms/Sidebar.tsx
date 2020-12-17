@@ -6,11 +6,16 @@ import {
   View,
   Image,
   ActionButton,
+  Switch,
+  Grid,
 } from '@adobe/react-spectrum';
 import { useMeasure, useWindowSize } from 'react-use';
 import { QuestionList } from '../molecules/QuestionList';
 import { QuestionSearch } from '../atoms/QuestionSearch';
 import logo from '../../images/github.png';
+import Moon from '@spectrum-icons/workflow/Moon';
+import Light from '@spectrum-icons/workflow/Light';
+import { isDarkVar } from '../../localState';
 
 export const Sidebar: React.FC = () => {
   const [ref, dimension] = useMeasure<HTMLDivElement>();
@@ -30,8 +35,25 @@ export const Sidebar: React.FC = () => {
               boxSizing: 'border-box',
             }}
           >
-            <Flex justifyContent={'space-between'} alignItems={'center'}>
+            <Grid
+              alignItems={'center'}
+              columns={['auto', 'size-1000', 'size-600']}
+            >
               <Heading level={1}>Q-SeeD</Heading>
+              <Flex alignItems={'center'}>
+                <Light size={'S'} />
+                <Switch
+                  margin={'size-75'}
+                  onChange={(isSelected) => {
+                    if (isSelected) {
+                      isDarkVar(true);
+                    } else {
+                      isDarkVar(false);
+                    }
+                  }}
+                />
+                <Moon size={'S'} />
+              </Flex>
               <ActionButton
                 isQuiet
                 UNSAFE_style={{ cursor: 'pointer' }}
@@ -50,7 +72,7 @@ export const Sidebar: React.FC = () => {
                   UNSAFE_style={{ opacity: 0.6 }}
                 />
               </ActionButton>
-            </Flex>
+            </Grid>
             <Divider size={'M'} />
             <QuestionSearch />
           </View>
